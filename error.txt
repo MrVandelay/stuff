@@ -1,0 +1,47 @@
+
+xdg-desktop-portal-gt
+
+
+
+2026-04-17T21:29:48.772124+02:00 haleytek-433366 systemd[4192]: Started snap.snapd-desktop-integration.snapd-desktop-integration.service - Service for snap application snapd-desktop-integration.snapd-desktop-integration.
+2026-04-17T21:29:48.871887+02:00 haleytek-433366 snapd-desktop-i[905486]: Failed to do gtk init. Waiting for a new session with desktop capabilities.
+2026-04-17T21:29:48.876192+02:00 haleytek-433366 snapd-desktop-i[905486]: Checking session /org/freedesktop/login1/session/_329...
+2026-04-17T21:29:48.876883+02:00 haleytek-433366 snapd-desktop-i[905486]: Is a desktop session! Forcing a reload.
+2026-04-17T21:29:48.876917+02:00 haleytek-433366 snapd-desktop-i[905486]: Loop exited. Forcing reload.
+2026-04-17T21:29:51.014729+02:00 haleytek-433366 systemd[4192]: snap.snapd-desktop-integration.snapd-desktop-integration.service: Scheduled restart job, restart counter is at 7137.
+2026-04-17T21:29:51.033881+02:00 haleytek-433366 systemd[4192]: Started snap.snapd-desktop-integration.snapd-desktop-integration.service - Service for snap application snapd-desktop-integration.snapd-desktop-integration.
+2026-04-17T21:29:51.126791+02:00 haleytek-433366 snapd-desktop-i[905580]: Failed to do gtk init. Waiting for a new session with desktop capabilities.
+2026-04-17T21:29:51.130994+02:00 haleytek-433366 snapd-desktop-i[905580]: Checking session /org/freedesktop/login1/session/_329...
+2026-04-17T21:29:51.131506+02:00 haleytek-433366 snapd-desktop-i[905580]: Is a desktop session! Forcing a reload.
+2026-04-17T21:29:51.131544+02:00 haleytek-433366 snapd-desktop-i[905580]: Loop exited. Forcing reload.
+2026-04-17T21:29:53.264655+02:00 haleytek-433366 systemd[4192]: snap.snapd-desktop-integration.snapd-desktop-integration.service: Scheduled restart job, restart counter is at 7138.
+2026-04-17T21:29:53.279089+02:00 haleytek-433366 systemd[4192]: Started snap.snapd-desktop-integration.snapd-desktop-integration.service - Service for snap application snapd-desktop-integration.snapd-desktop-integration.
+2026-04-17T21:29:53.371370+02:00 haleytek-433366 snapd-desktop-i[905691]: Failed to do gtk init. Waiting for a new session with desktop capabilities.
+2026-04-17T21:29:53.375239+02:00 haleytek-433366 snapd-desktop-i[905691]: Checking session /org/freedesktop/login1/session/_329...
+2026-04-17T21:29:53.375656+02:00 haleytek-433366 snapd-desktop-i[905691]: Is a desktop session! Forcing a reload.
+2026-04-17T21:29:53.375692+02:00 haleytek-433366 snapd-desktop-i[905691]: Loop exited. Forcing reload.
+2026-04-17T21:29:55.514961+02:00 haleytek-433366 systemd[4192]: snap.snapd-desktop-integration.snapd-desktop-integration.service: Scheduled restart job, restart counter is at 7139.
+2026-04-17T21:29:55.534115+02:00 haleytek-433366 systemd[4192]: Started snap.snapd-desktop-integration.snapd-desktop-integration.service - Service for snap application snapd-desktop-integration.snapd-desktop-integration.
+2026-04-17T21:29:55.628077+02:00 haleytek-433366 snapd-desktop-i[905798]: Failed to do gtk init. Waiting for a new session with desktop capabilities.
+2026-04-17T21:29:55.631902+02:00 haleytek-433366 snapd-desktop-i[905798]: Checking session /org/freedesktop/login1/session/_329...
+2026-04-17T21:29:55.632259+02:00 haleytek-433366 snapd-desktop-i[905798]: Is a desktop session! Forcing a reload.
+2026-04-17T21:29:55.632284+02:00 haleytek-433366 snapd-desktop-i[905798]: Loop exited. Forcing reload.
+
+
+The "Failed to do gtk init" error in i3 usually indicates a broken D-Bus session or missing portal services, preventing GTK applications from initializing properly. To fix, ensure xdg-desktop-portal is installed and running, check for D-Bus environment issues, and ensure dbus-x11 or dbus-user-session is properly configured.
+Arch Linux Forums
+Arch Linux Forums
+ +3
+Key Solutions:
+Check D-Bus Activation: Run the following command in your terminal to update the session environment, which often fixes this issue, as seen on GitHub:
+dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+Remove Conflicting Portals: If you have multiple portals, they may conflict. Remove unnecessary ones, such as removing xdg-desktop-portal-gnome if using XFCE/i3, as suggested on Valve Software.
+Reinstall/Fix FUSE (If applicable): On Ubuntu-based systems, a FUSE error can cause this. Try running: sudo apt install libfuse2t64.
+Ensure dbus-user-session is installed: Ensure your system is using a modern dbus-user-session rather than dbus-x11, which can cause session management failures.
+Ask Ubuntu
+Ask Ubuntu
+ +3
+If GTK applications are lagging rather than failing to start, ensure a compositor like picom is installed and running in your i3 config.
+Arch Linux Forums
+Arch Linux Forums
+

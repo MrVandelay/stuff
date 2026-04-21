@@ -1,0 +1,220 @@
+Useful code:
+
+Sync sources after restart:
+adamwi@haleytek-271307:~$ sh bin/mount_sources.sh
+
+Contact hardware:
+picocom -b 115200 /dev/ttyUSB0
+picocom -b 115200 /dev/ttyUSB1
+picocom -b 115200 /dev/ttyUSB2
+picocom -b 115200 /dev/ttyUSB3
+
+#Read dimd logs in QNX (debugging for example) in IHU5-QNX: 
+slog2info -waS | grep -iE "dimd"
+slog2info -waS | grep -iE "dimd|Invoking "resume" for external client "gfx_pm.0"|Client "gfx_pm.0" sent in band ack"
+slog2info -waS | grep -iE "csd_dim_d"
+slog2info -waS | grep -iE "csd_dim_d|display_traffic_handler|DisplaySafetyManager|displaycontroller|powerdaemon"
+slog2info -waS | grep -iE "csd_dim_d|DisplaySafetyManager"
+slog2info -waS | grep -iE "csd_dim_d|DisplaySafetyManager|salsa"
+slog2info -waS | grep -iE "display_traffic_handler"
+slog2info -waS | grep -iE "dimd|displaycontroller|display_traffic_handler"
+slog2info -waS | grep -iE "dimd|DisplaySafetyManager"
+slog2info -waS | grep -iE "dimd|DisplaySafetyManager|salsa|displaycontroller"
+slog2info -waS | grep -iE "dimd|DisplaySafetyManager|displaycontroller|hpa"
+slog2info -waS | grep -iE "DisplaySafetyManager"
+slog2info -waS | grep -iE "dimd|displaycontroller"
+slog2info -waS | grep -iE "dimd.|qcore."
+slog2info -w | grep -iE "powerdaemon|qcore"
+slog2info -waS | grep -iE "powerdaemon|qcore|dimd|DisplaySafetyManager"
+
+slog2info -waS | grep -iE "powerdaemon|dimd|DisplaySafetyManager"
+
+#Checking logs in VSC
+input regex: 
+dimd|DisplaySafetyManager|displaycontroller|powerdaemon|display_traffic_handler
+
+slay slog2info
+
+#Going into STR (Suspend To Ram) from IHU5-QNX consol
+echo 2 > /dev/pminputsignal
+##Check for a confirmation of STR in HKP consol
+##To wake up QNX, log into the HKP console and press any key.
+
+#Collect logs from SoC to file on desktop
+picocom -b 115200 -l /dev/ttyUSB0 -g ~/logs_from_serials/DHUM_ON_COMET_$(date +"%F_%T").log 
+
+#If you want more QNX sessions open, then SSH into it from another terminal:
+ssh -o "StrictHostKeyChecking no" root@192.168.1.1
+
+#Turn DIM on an off
+##On
+echo 2 > dev/display/dim/state
+##Off
+echo 4 > dev/display/dim/state
+
+#Check if it is display or video feed that's glitchy
+sw-vsync -display=1 #Generates video on screen (dim=1) from the SOC, so it tests the whole video link (ser-deser)
+
+#Add pictures to DIM/HUD
+##Run this command for HUD:
+
+    ssplash -f /usr/share/img/hud/hud_v2.png -d 2
+
+##Run this command for DIM:
+
+    ssplash -f /usr/share/img/dim/SPA2_DIM+HUD_FOCUS.png  -d 0
+
+#Control HUD
+First run: 
+ht_displaycontroller_mock &
+
+#Send cmd to SER/DES via it
+##dth_client can send command to dth, which will talk to ser/des via UART
+dth_client r <dev_addr> <reg_addr>
+##Example:
+dth_client r 0x91 0xD
+This command will read from the deserializer (0x91) From register address 0xD (13 decimal)
+Expected Result: You should get 0x82 which identifies the MAX96752F deserializer chip used in the DHU1.1 system.
+
+#Run Comet Binary
+python3 artifacts-downloader-#######.py
+cd flashfiles_#######
+python3 fastboot.py
+->IHU5-QNX: reset -f
+fastboot reboot
+
+#Flash a MOOSE FW download with qdl (from ara artifacts)
+moose_update --fw ~/Downloads/flashfiles_######.zip --qdl
+
+#If HT-precommit is acting up, just use the "raw" version and not alias
+$ alias enable-ht-precommit
+enable-ht-precommit='pre-commit install -c $(repo --show-toplevel)/tools/haleytek/pre-commit-config/.pre-commit-config.yaml'
+## Manually activate it per branch
+pre-commit install -c $(repo --show-toplevel)/tools/haleytek/pre-commit-config/.pre-commit-config.yaml
+
+#Update HKP
+##Find a HKP artifact under https://ara-artifactory.volvocars.biz/ui/repos/tree/General/dhuh-merged/master/25.02.3.05.1907/user
+dhuh_update --artifacts-path ~/sources/HKP_Builds/artifacts.zip #(From ara artifacts)
+##or
+dhuh_update --download release
+##PS. This command will flash DHUH with latest release artifacts over DoIP with fallback to Serial
+
+
+#Rescue a DHU in recovery mode
+##If you can conenct to HKP:
+###If you can access hkp console, run command “edl” in it.
+###Unzip fw.zip and run comand 
+checksparse.py -i rawprogram0.xml 
+###and then
+checksparse.py -i rawprogram4.xml
+###in volvo docker.
+###Then run: 
+qdl prog*.elf rawprogram[0-5].xml patch[0-5].xml
+###When flashing finishes, send “restart” from HKP console.
+##or
+for i in {0..7}; do checksparse.py -i rawprogram${i}.xml; done
+qdl --multiplier 16 prog_firehose_ddr.elf rawprogram?.xml patch?.xml
+
+
+#Run MYPY locally:
+mypy --config-file /home/adamwi/sources/comet/tools/haleytek/platform/test/environment/mypy.ini /home/adamwi/sources/comet/tools/haleytek/platform/test/shared/utility/display/
+
+#Copy over folder
+scp root@192.168.1.1:data/setup_power_relay_test_found.txt /home/adamwi/sources/PyTestsWithLogging/CaughtLogs
+scp root@198.19.60.204:data/stability_str_serdes_registers_* /home/adamwi/sources/Adams_files/103Issue/CaughtLogsWithHudAndMooseMaster
+#Copy over to folder from DHU
+scp /data/desktoptest.txt adamwi@198.19.60.205:/home/adamwi/sources/PyTestsWithLogging/CaughtLogs/
+scp /data/stability_str_serdes_registers_* adamwi@198.19.60.205:/home/adamwi/sources/Adams_files/103Issue/CaughtLogsWithHudAndMooseMaster
+scp /data/dsm_str_test_both_delayed_power_video_link_unlocked_20260216_091355.log adamwi@198.19.60.205:/home/adamwi/sources/PyTestsWithLogging/CaughtLogs/
+
+scp /tmp/displog_surface_dump_13_[00:01:33.403]_1600x2560_abgr8888.rgb.ubwc adamwi@198.19.60.205:/home/adamwi/sources/Adams\ files/103Issue/QnxRequestedLogs/
+
+#Manifest Safety Docker
+## Check container running
+docker ps
+
+## Start the container (if not running)
+./sources/manifest_safety/tools/haleytek/docker-images/run.py --target safety --non-interactive
+
+## Attach to the container
+docker exec -it safety-user-app-1 bash
+
+## The path should look like: [users]-safety:~/sources/manifest_safety$
+
+
+#i2c tool in SoC:
+i2c_tool - Usage: i2c_tool [normal:0 - scan slaves:1] [read:0 - write:1] [device node] [slave address] [register addr] [RegAddrFormat (8b:0 - 16b:1)] [If write, series of values. If read, number of bytes to read]
+
+i2c_tool 0 0 /dev/i2c6 0x2f 0x00 0 1
+
+
+#Using serdes_reg in picocom (SPA2)
+##Setting HUD wakeup pin high
+echo "0x90 0x0209 0x10" > /dev/display/hud/serdes_register
+
+
+#Run UNIT TESTs
+Go to safety docker in manifest_safety and source qnx:
+make qnx
+cmake --build --preset qnx7_aarch64le -j "$(nproc)" --target install-all-safety-unittests
+Run the tests with:
+tools/haleytek/safety_test_tools/run_tests_on_target.py --dhu-image ASTEROID --copy-result-xml reports_xmls
+
+#Running comet pytest with logs
+devicetek run-pytest ./tools/haleytek/platform/test/comet/display/tests/dsm/test_dsm_safety_registers.py::test_dsm_log_access_simple --log INFO	
+
+#Inject fault in SPA2 DSM
+echo "0x80 0x00 0x01" > /dev/display/hud/serdes_register
+
+#Inject fault in SPA3 DSM
+i2c_tool w /dev/i2c6 0x40 0x05 1 0x88 #Will change the register value on ser reg 0x05
+
+#Removing dockers
+##Check active docker images with
+docker images
+
+##Remove any of those images with 
+docker image rm <docker id>
+
+#VCC docker
+## Have correct username and pw in ~/.netrc file
+## Login to the docker with
+docker login conxsir-docker-lts.ara-artifactory.volvocars.biz
+
+#Run different ruff version (maybe CI uses a different one, check their config with:
+adamwi@haleytek-to-be-filled-by-o-e-m ~/s/m/t/h/pre-commit-config (master) [2]> cat .pre-commit-config.yaml
+.....
+##Then you can change the ruff version with:
+adamwi@haleytek-to-be-filled-by-o-e-m ~/s/m/t/h/pre-commit-config (master)>ruff --version
+ruff 0.14.4
+adamwi@haleytek-to-be-filled-by-o-e-m ~/s/m/t/h/pre-commit-config (master)> uv --version
+uv 0.9.12
+##And to run it you do
+adamwi@haleytek-to-be-filled-by-o-e-m ~/s/m/c/s/s/dsm (FixDSMIntegrationTests)> uv tool run ruff==0.12.9 format test/it/pytests/
+
+
+
+#Merge logging files with own script (placed in Adams files:
+./merge_logs.sh "/home/adamwi/sources/Bug_investigations/BlackDimMeeting/ARTHTP-2506/ARTHTP-2506/merged/bugreport-moose_uxc10_vcc_gas-AAG5.251031.001-2025-12-10-13-58-56/dumpstate_board/oem_traces/qnx_logs/var/log/ht_system_monitor" boot.txt
+
+#Find commit in VCC build (with example):
+1. Find SW version (DHUM) in ticket: 26.02.2.13.0045
+2. Go to ara artifacts: https://ara-artifactory.volvocars.biz/ui/repos/tree/General/ARTCSP-PyPi
+3. Go to HW name and version: uxcm-merged/master/v/26.02.2.13.0045/moose_mp_uxc10_vcc_gas/userdebug
+4. Download "manifest_for_build.xml"
+5. Open xml file with chrome and search for "bshalp"
+6. Check hash of bshalp and find the commit in HT gerrit: https://source.haleytek.net/c/haleytek/qnx/vendor/haleytek/driver/display/prebuilts/bshalp_common_s3_csd_dim/+/79486
+7. Open the xml file and check the hash of the BSHALP and compare it which commit it links to in https://source.haleytek.net/plugins/gitiles/haleytek/qnx/vendor/haleytek/driver/display/BSHALP_COMMON_S3_CSD_DIM/+log/refs/heads/master
+8. Now you know which commit was in that build
+
+
+#Merge bugreports that are split up
+7z x <name of first bugfile>
+##Example
+7z x bugreport-moose_uxc10_vcc_gas-AAG5.251031.001-2026-01-14-16-03-42.001
+
+#Filter txt logs
+grep -E 'dimd|DisplaySafetyManager|salsa|powerdaemon|displaycontroller|qcore' "/home/adamwi/sources/Bug_investigations/BlackDimMeeting/GATCONX-1653/OneDrive_2026-03-02/Black DIM after short STR/bugreport-moose_vcc_gas-AAG5.251031.001-2026-03-02-08-45-45/dumpstate_board/oem_traces/qnx_logs/var/log/ht_system_monitor/safe_state.txt" > filtered_safe_state.txt
+
+#Unpack HaleyTek build python file:
+~/.venvs/azstorage/bin/python artifacts-downloader-

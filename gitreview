@@ -1,0 +1,5 @@
+[gerrit]
+host=source-sync.haleytek.net
+project=haleytek/qnx/vendor/haleytek/driver/display/ALPNS_COMMON_S2_DIMHUD
+defaultbranch=master
+

@@ -1,0 +1,1 @@
+ACTION=="add", ATTR{idVendor}=="13d3", ATTR{idProduct}=="3571", RUN="/bin/sh -c 'echo 1 >/sys/\$devpath/remove'"
