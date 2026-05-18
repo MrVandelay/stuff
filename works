@@ -1,0 +1,41 @@
+
+
+
+1f7f7dfdd  No adb
+
+b1d3f7768 No ADB
+
+43889ac84 No ADB
+c563307f4 ADB
+
+69b3269d5 ADB
+
+32257c3df ADB
+4f4bedfa1 ADB
+6fa8675a0 ADB
+
+a85eb27fb ADB
+
+f5f86b8b2 ADB
+
+
+
+
+
+01229092e 01229092e Revert "Add qnx_server.log to required dumpstate patterns"
+
+
+
+
+Working on haleytek-dhu-15 manifest sha1:  c563307f4 (That have adb shell)
+
+Branch HT-41531 : haleytek-dhu-15/qnx/apps/qnx_ap/cvendor/haleytek/haleymon
+Branch HT-41531 : haleytek-dhu-15/tools/haleytek/platform/test/comet
+Branch HT-41531 : manifest-safety-8155/components/safety-display/driver/ALPNS_COMMON_S2_DIMHUD
+
+
+Updated file: haleytek-dhu-15/tools/haleytek/platform/test/shared/configs/comet/log_collection_test_config.yaml
+As reverted in  01229092e
+Add  - oem_traces/qnx_logs/qnx_server.log
+    line:  37
+Now we can pass

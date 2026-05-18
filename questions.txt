@@ -1,0 +1,21 @@
+
+What setup for AI
+
+Do you have copilot-instructions.md or CLAUDE.md where are they put
+
+claude
+
+Copilotchat neovim
+https://haleytek.atlassian.net/wiki/spaces/HSWD/pages/2160492558/Code+and+docs+indexing+for+LLM
+
+
+
+----------------------------------------------
+AI sammanfattning:
+
+- Qdrant work/dont work dont know
+- cluade only got working in CLI
+
+
+Neovim
+    Copilot works but not chat

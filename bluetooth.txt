@@ -1,0 +1,8 @@
+
+Dongle
+
+Bus 001 Device 006: ID 0b05:17cb ASUSTek Computer, Inc. Broadcom BCM20702A0 Bluetooth
+Controller 5C:F3:70:89:E1:0E
+
+
+

@@ -1,17 +1,25 @@
-Gerrit
+# TODO
+A better way to jump between repo
 
-git push --no-follow-tags  gerrit HEAD:refs/for/master%topic=HT-41531
+# Gerrit
+## Push (same as git review)
+    $ git push --no-follow-tags  gerrit HEAD:refs/for/master%topic=HT-41531
+    $ git push --no-follow-tags  origin HEAD:refs/for/master%topic=HT-41531
+
+## Run pre-commit manually
+ $ bash .git/hooks/pre-commit
+
 
 
 # Thins needed to be done once
 ## Install ADB
     start adb service
 ## Setup ssh to DHU
-Switches on box: on   '
-                     ' ''
+Switches on box: on   '''
+                     '
                      1234
 Set the settings to
-                linkspeed: 100Mb/s as defined on the box as well
+                linkspeed: 1000Mb/s as defined on the box as well
                 ipv4: 192.168.1.2
                 Netmask: 255.255.255.0
 
@@ -102,7 +110,8 @@ Building
 
 
 
-./tools/haleytek/docker-images/run.py --target safety source safety_build/safety-env.sh 8155
+./tools/haleytek/docker-images/run.py --target safety
+source safety_build/safety-env.sh 8155
 make qnx-tools
 make qnx-install
 
@@ -134,8 +143,8 @@ make qnx-install
 ### Build Comet QNX
     $qnx-ht-433366 cd qnx/apps/qnx_ap/
     $qnx-ht-433366 source cvendor/haleytek/setenv_QNX.sh 8155
-    $qnx-ht-433366 make`
-## Move all(?) fils to flashfiles_out
+    $qnx-ht-433366 make
+## Move all(?) files to flashfiles_out
     $ cd ~/sources/haleytek-dhu-15
     $(haleytek-dhu-15) ./nonhlos/vendor/tools/scripts/copy_build_artifacts.py nonhlos/vendor/haleytek/moose/comet.json nonhlos --out flashfiles_out
 
@@ -151,7 +160,7 @@ make qnx-install
 ## After it completes flashing
     $ fastboot reboot
 
-# Running dsm test
+# Running dsm test for safety-display
 ## Start device testing docker
     $ cd ~/sources/manifest-safety-8155
     $ ./tools/haleytek/docker-images/run.py --target device-testing
@@ -159,13 +168,19 @@ make qnx-install
 ## Running test
     $device-testing-ht-433366 devicetek run-pytest components/safety-display/safety/dsm/test/it/pytests
 
-
-
-
 ## More specific test
-
     devicetek run-pytest components/safety-display/safety/dsm/test/it/pytests/test_dsm_broadcast_heartbeats.py::test_dsm_remove_fault[UXC10]
 
+# Running dsm test for qnx
+## Start device testing docker
+    $ cd ~/sources/haleytek-dhu-15
+    $ ./tools/haleytek/docker-images/run.py --target device-testing
+
+## Running test
+    $device-testing-ht-433366 devicetek run-pytest ./tools/haleytek/platform/test/comet/display/tests/dim_hud_common/test_dim_hud_driver_initialized.py
+    $device-testing-ht-433366 devicetek run-pytest ./tools/haleytek/platform/test/comet/display/tests/csd/test_csd_status.py
+
+    devicetek -l DEBUG  run-pytest --pytest-arg="-s -vv" --disable-file-logging --disable-dlt-logging ./tools/haleytek/platform/test/shared/logs_collection_test/test_bugreport_content.py::test_no_unhandled_dumpstate_board_bin_files_exist
 ## Generate device_config.json
     devicetek -l DEBUG generate-config
 
@@ -176,7 +191,23 @@ make qnx-install
     $ ~/.venvs/azstorage/bin/python artifacts-downloader-
 
 
+# Restore bricket device
+    1. Download FW.zip  from somewhere:
+        https://ara-artifactory.volvocars.biz/ui/repos/tree/General/dhum-merged/master/V/26.18.1.21.4042/moose_mp_polestar_gas/userdebug/FW.zip
+    2. Move to ~/sources/haleytek-dhu-15/firmware
+    3. Unzip the FW.zip
+    4. Got to picocom -b 115200 /dev/ttyUSB0 and excute "edl"
+    5. Start the device_testing docker wher we have qdl and checkpars.py
+       ./tools/haleytek/docker-images/run.py --target device-testing
+    6. In the docker run:
+        for i in {0..5}; do checksparse.py -i rawprogram${i}.xml; done
+        qdl prog_firehose_ddr.elf rawprogram?.xml patch?.xml
+    7. Reboot the decice disconnect cable
+    8. Now we should be able to get into  picocom -b 115200 /dev/ttyUSB1 and flash qnx
 
+
+
+repo checkout someting old repo sync nmu something
 
 
 Flash HKP with user debug

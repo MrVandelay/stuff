@@ -1,0 +1,71 @@
+20260427
+
+Requeirements responsible
+Same codebase for spa2 spa3 to me
+
+Should check
+- unit test
+- branch
+- code coverage
+- integrations test
+- implmented
+
+
+This is for Max excel sheet
+
+......................................
+release weeek 22?
+
+Where are the release dates
+Where is the excel sheet with all req
+
+2026-04-29
+
+If I understand it correctly:
+The ticket: for example https://haleytek.atlassian.net/browse/HT-79880
+is the ACTUAL Requeirement ticket and not a ticket to just monitor the progress on verifying Requeirements
+
+What is this ticket used for in the future?
+
+And in this ticket verify that
+- revision is ok
+- Requirement exists in pdf
+- Copy pictures?
+
+Should we update the ticket with comment like in this https://haleytek.atlassian.net/browse/HT-80055
+
+AC:
+Each requirements ticket status are up to date, including correct progess status, proper EPIC links, implmentation status summary per requirement in one comment with following items:
+
+Requirement Implmentation status: (In Progress, To Do, Done)
+
+Test coverage: (In Progress, To Do, Done)
+
+Detailed information:
+
+Code location: (File path from gerrit, or N/A)
+
+Inspected code revision: (Current commit hash, or N/A)
+
+Matches requirement: (matching part, or N/A)
+
+Issues found: (not matching part, or N/A)
+--------------------------------------------------------------------------------
+- Requirement Implmentation status: <In Done>
+
+- Test coverage: <Todo>
+
+- Detailed information:
+
+    - Code location:
+        <https://source.haleytek.net/plugins/gitiles/haleytek/qnx/vendor/haleytek/driver/display/BSHALP_COMMON_S3_CSD_DIM/+/refs/heads/master/dim/libdim/inc/des_settings.hpp>
+
+    - Inspected code revision: <SHA1>
+
+    - Matches requirement:
+
+    - Issues found:
+
+    - Summary:
+
+

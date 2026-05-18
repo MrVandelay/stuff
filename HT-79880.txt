@@ -1,0 +1,13 @@
+
+
+
+
+https://haleytek.atlassian.net/browse/HT-66257
+    https://source.haleytek.net/q/project:haleytek/qnx/vendor/haleytek/driver/display/BSHALP_COMMON_S3_CSD_DIM+branch:master
+
+https://haleytek.atlassian.net/browse/HT-69042
+
+https://haleytek.atlassian.net/browse/HT-66258
+    https://source.haleytek.net/plugins/gitiles/haleytek/qnx/vendor/haleytek/driver/display/common/libserdes/+/refs/heads/master
+    https://source.haleytek.net/plugins/gitiles/haleytek/qnx/vendor/haleytek/driver/display/dsm
+
