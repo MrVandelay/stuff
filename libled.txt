@@ -1,0 +1,23 @@
+
+1. Add to common/libled                             Done                HT-83848
+
+2. Add lib to safety build                          Done                HT-83634
+
+3 Add unitest for led
+    3.1 led_max20444.hpp                            Done                HT-84405
+    3.2 led_max25512.hpp
+    3.3 led_max25561.hpp
+    3.4 led_mpq3367.hpp
+
+4 Update manifest for LED support
+    Add libled to manifest
+
+5 Remove led from driver
+    4.1 Remove led from ALPNS_COMMON_S2_DIMHUD      Done                HT-84683
+    4.2 Remove led from TC_2569_1600_G2_CDD         Done                HT-84683
+    4.3 Remove led from AUO_1930_1200_G2_CDD        Done                HT-84683
+    4.4 Remove led from BSHALP_COMMON_S3_CSD_DIM    Done                HT-84683
+
+
+
+

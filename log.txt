@@ -1,3 +1,132 @@
+1. Read a guide             x x
+2. Codereview               x
+3. Release plan
+4. Check Jira               x
+2. Check teams              x x
+3. Check mail               x x
+
+Remember:
+Check with Jonas on follow my commit.
+    https://haleytek.atlassian.net/wiki/spaces/HI/pages/1571717138/How+to+track+your+change+commit
+Book a car and  u r eand do a mock release.
+Write a document on how to do a release and what to check for.
+Create a ticket for ecarx                                           Kind of done
+How to build and flash DHU/UXC for safety release
+
+Questions:
+Jonas
+    How is he using AI on nvim?
+Salina
+    Vart hittar man release datum?
+    Hur vet vi när vi skall göra safety release?
+Max
+    Hur kan man förbereda sig för refinement?
+
+
+Jira story for onboarding
+Clean up story from Max
+
+
+
+--------------------------------------------------------------------------------
+2026-06-03
+Write subtask in jira.
+Force push to new repo, with git log intact, and then move the code in manifest and then push again.
+
+Unit test for led driver, and then move the code to new repo and then push again.
+Car test:
+
+XPK32L
+
+
+
+2026-06-02
+Change it to PascalCase as per google style guide
+Turning public into private
+Rearrange order of functions.  public, protected, private
+Use override instead of final
+Use c++ /** / style comments instead of // comments
+
+Sometimes we cast and sometimes we use ceil.
+New function for PowerDown led_max20444
+Added GetMaxBrightness to interface and a default implementation that returns -1
+Return int8_t when status is returned,
+For parameters we use uint32_t
+Removed get_fault
+
+
+
+2026-06-01
+Safety release, SACA  Software Safety Case (SACA) part of safety relase
+tool qualification part of safety release
+Adams requirments for 2.5 changes compared to 2.0
+
+Safety relase for SPA2 SPA3
+    2.0 2.5
+
+
+2026-05-29
+Create a ticket for ecarx on log dowload 
+Try to follow my commit. 
+Create som more subtask  
+
+Continue with moving files
+
+Notes:
+
+
+
+
+--------------------------------------------------------------------------------
+2026-05-
+
+Have moved affected files to new repo with git log intact
+
+Question
+
+Do we want to have the history for the files or is it better to
+have the history in manifiest where it is visible that we added a new repo ?
+
+Is is ok to push code that dont compile?
+Of course it will compile when we add it to manifest.
+
+
+
+
+
+
+
+
+
+
+
+HT-41351                        in review, I need help
+Nithin task
+    Repo preperation            done
+    Repo request
+    Library skeleton
+    Interfaces LedDriver LedDriverImpl
+
+    What is the point?
+      Today there is a driver withing  8255
+                                          BSHALP_COMMON_S3_CSD_DIM called     led_max25561.hpp
+                                          ALPNS_COMMON_S2_DIM_HUD             led_max20444.hpp
+
+                                       8155
+                                          TC_2560_1600_G2_CSD                 led_max25512.hpp
+
+git log   --pretty=email   --patch-with-stat   --reverse   --full-index   --binary   -m   --first-parent   -- led_max25512.hpp > patch
+git am --committer-date-is-author-date < ../../driver/TC_2560_1600_G2_CSD/inc/patch
+
+
+
+Testa i bil? Suspend to RAM Safety release? HT-82950 Ask Tobias? Jesus?
+Dokumentation safety docs ?         HT-80334, after test
+Requirements
+
+
+
+
 20260427
 
 Requeirements responsible

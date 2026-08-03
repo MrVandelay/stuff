@@ -1,6 +1,68 @@
 # TODO
 A better way to jump between repo
 
+
+SWDL (Software Download Engine)
+SWUT Software Update Tool
+
+# unittest
+ctest --preset=linux_x86-64 --output-junit "xml/testreport.xml"
+or
+make linux-ut
+
+Report
+manifest_safety/build/linux_x86-64/coverage_reports/coverage_details.html
+
+Unit test on target
+make qnx
+cmake --build --preset qnx7_aarch64le -j "$(nproc)" --target install-all-safety-unittests
+tools/haleytek/safety_test_tools/run_tests_on_target.py --dhu-image COMET --copy-result-xml reports_xmls
+
+
+
+AI
+From cli
+cop
+cluade
+
+
+# HALETEK software
+
+## HKP
+### download from CI
+### Build self
+### Flash
+
+# DHU
+## download from CI
+## Build self
+### Flash
+
+# UHX
+## download from CI
+## Build self
+### Flash
+
+
+# VCC software
+
+## HKP
+### download from CI
+### Build self
+### Flash
+
+# DHU
+## download from CI
+## Build self
+### Flash
+
+# UHX
+## download from CI
+## Build self
+### Flash
+
+
+
 # Gerrit
 ## Push (same as git review)
     $ git push --no-follow-tags  gerrit HEAD:refs/for/master%topic=HT-41531
@@ -141,9 +203,19 @@ make qnx-install
     $ ./tools/haleytek/docker-images/run.py --target qnx
 
 ### Build Comet QNX
-    $qnx-ht-433366 cd qnx/apps/qnx_ap/
-    $qnx-ht-433366 source cvendor/haleytek/setenv_QNX.sh 8155
-    $qnx-ht-433366 make
+    $ qnx-ht-433366 cd qnx/apps/qnx_ap/
+    $ qnx-ht-433366 source cvendor/haleytek/setenv_QNX.sh 8155
+    $ qnx-ht-433366 make
+
+# With ht_build.py
+## From inside the docker
+    $ ./tools/haleytek/docker-images/run.py --target qnx
+    $ qnx-ht-433366 ./tools/haleytek/qualcomm/ht_build.py --already-in-docker --product-name comet --target qnx --build-variant userdebug --collect-flash-files --verbose
+## From outside the docker
+    $ ./tools/haleytek/qualcomm/ht_build.py --product-name comet --target qnx --build-variant userdebug --collect-flash-files --verbose
+
+
+
 ## Move all(?) files to flashfiles_out
     $ cd ~/sources/haleytek-dhu-15
     $(haleytek-dhu-15) ./nonhlos/vendor/tools/scripts/copy_build_artifacts.py nonhlos/vendor/haleytek/moose/comet.json nonhlos --out flashfiles_out
@@ -235,4 +307,129 @@ Test failing
 3.1 Why cant I generate device config? No support for comet?
 
 ~4.1 What is NONHLOS and Linux guest?~
+
+
+
+# VCC
+## Download and flash DHU with moose
+Latest DHU software are in dhum-merged
+For the HKP the software are in DHUK-merged
+Find it here: https://ara-artifactory.volvocars.biz/ui/repos/tree/General/
+
+For HKP: Dowload userdebug/artifacts.zip
+For DHU: Dowload userdebug/FW.zip
+
+## How to build
+
+It might be that we need to run actiovation first. Think it should be done outside the docker
+$ cd tools/volvo/docker_build/toolchain/qnx/
+$ source qnx_license_activation.sh
+
+
+Without docker
+
+./tools/volvo/bin/src_builder/src_builder dhu10 all --android-target=moose_vcc_gas-gap_current-userdebug -j32  Dont work
+./tools/volvo/bin/src_builder/src_builder dhu10 qnx
+
+
+
+### with docker
+tools/volvo/docker_image/run.sh --multiuser
+cd qnx/apps/qnx_ap
+sudo ln -sf  /usr/bin/python2 /etc/alternatives/python
+
+source cvendor/volvocars/setenv_QNX.sh
+make
+
+
+
+## How to flash it?
+Go to IHU-QNX# and reset -f
+moose_update?
+
+
+Then you can flash the downloaded files using fastboot or qdl depending on the file type and device state
+
+
+
+
+# Spa2 ?
+https://ara-artifactory.volvocars.biz/ui/repos/tree/General/dhum-merged/master/V/26.18.4.21.3043
+
+# Spa3?
+
+
+
+https://artinfo-gerrit.volvocars.biz/plugins/gitiles/manifest_uxc10/+/refs/heads/master/README.md
+
+https://confluence.volvocars.biz/spaces/ARTINFO/pages/780854392/Artifactory+TokenUpdater+-+setup
+
+How to downdlooad volvovars repo?
+
+But if we have it staart docker like this:
+tools/volvo/docker_image/run.sh
+
+Within docker
+
+~/Documents/MooseBuilds/rel2/20/25.40.1.10.3020/moose_mp_polestar_gas/userdebug/FW.zip
+
+
+The car I have is:
+
+Car: XPK32L
+Need to do :
+    Dowload and flash the latest FW.zip for this car, which is:?
+    Setup if address at laptop
+    Install dlt logger at laptop
+
+
+
+
+
+docker compose -f /home/fredrik/sources/volvocars-dhu/tools/volvo/bin/src_builder/runners/compose.yml build qnx-docker-runner
+
+docker compose -f /home/fredrik/sources/volvocars-dhu/tools/volvo/bin/src_builder/runners/compose.yml run  --rm  --name src_builder_qnx_570_1781023771882115055 --remove-orphans qnx-docker-runner bash -c /home/fredrik/sources/volvocars-dhu/tools/volvo/bin/src_builder/src_builder.sh dhu10 qnx
+
+To  run docker
+
+Set these env variables first:
+export DOCKER_CONTAINER_NAME=fredrik \
+DOCKER_USER=1000:1000  \
+DOCKER_HOST_WORKSPACE=/home/fredrik/sources/volvocars-dhu \
+BAZEL_OUTPUT_USER_ROOT=/home/fredrik/.cache/bazel \
+CCACHE_DIR=/home/fredrik/.ccache \
+DOCKER_PASSWD_FILE=/home/fredrik/sources/volvocars-dhu/passwd \
+DOCKER_RUN_QNX_IT_RUNNER_NAME=fredrik \
+DOCKER_COMPOSE_YML=tools/volvo/bin/src_builder/runners/compose.yml \
+DOCKER_USER_ID=1000 \
+DOCKER_GROUP_FILE=/home/fredrik/sources/volvocars-dhu/group \
+DOCKER_HOSTNAME=haleytek-433366 \
+DOCKER_GROUP_ID=1000 \
+AOSP_BUILD_PARAMS=/home/fredrik/sources/volvocars-dhu/build-params-metadata.json \
+REPO_DIR=/home/fredrik/sources/volvocars-dhu \
+QNX_PATH=qnx/apps/qnx_ap \
+USE_BAZEL=1 \
+SELECTED_PLATFORM=DHU10
+
+
+docker compose -f /home/fredrik/sources/volvocars-dhu/tools/volvo/bin/src_builder/runners/compose.yml run --entrypoint bash  qnx-docker-runner
+tools/volvo/bin/src_builder/shared_scripts/build_qnx.sh
+
+
+When running src_builder
+
+IT will first firs run src_bulder
+    Will run docker_runner function
+        Will call configure_docker_settings
+            In here DOCKER_RUNNER_NAME is set
+
+        Will call uni_run.sh
+
+        Will start docker
+            From docker we start src_builder.sh with
+
+
+Set DOCKER_RUNNER_NAME to src_builder_qnx_570_1781023771882115055
+Then call uni_run.sh with the docker runner name
+
 

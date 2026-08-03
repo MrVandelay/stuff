@@ -1,0 +1,36 @@
+
+Preperation:
+ - Book a car at M1
+
+Equipment:
+ - DHU/UHX
+ - network -> USB adapter
+ - Computer
+
+
+
+1.  Disconnect the DHU/UHX from the car.
+
+2.  Connect the new DHU/UHX with  the car.
+
+3.  Connect the usb cable and the ODB cable to computer
+
+4.  There is a confluence page on VCC with info about each cars IP based on
+    the number at the back of the car. (Not reg. number)
+    https://confluence.volvocars.biz/spaces/CONXSIR/pages/629470824/SPA2+vehicle+status
+    Set ip address in settings to for example if the cars ip  is 169.254.9.77 set it the computers ip
+    to 169.254.9.150 or something similar.
+
+5.  Open the terminal and type ssh swupdate@IP_ADDRESS (replace IP_ADDRESS with the
+    If continue the example above it would be ssh swupdate@169.254.9.150 -t root@198.19.56.204
+    Password is swupdate
+    We connect to the car and then we connect to the DHU/UHX with the second ssh command.
+
+6.  When we have a connection we can start DLT viewer to see that we get
+    the logs from the car.
+
+
+    slog
+
+slog2info -waS | grep -iE "DisplaySafetyManager|csd_dimd_d|display_traffic_handler"
+
