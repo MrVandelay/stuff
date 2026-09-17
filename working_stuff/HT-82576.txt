@@ -1,0 +1,115 @@
+Questions
+
+1. Where is Jesus test Done
+2. Should we do restart, shutdown or just stop the heartbeat? We should dr restatr
+3. We need to keep track of restart so we just adont restart over and over again.
+4. Should we have a common place to request restart/shutdown/reboot or should we just do it. We should use the libfaaulthandler
+   It feels like it should be a common place to request it so we can keep track of it and not do it over and over again.
+    Also to keep statistics  and what not.
+5. So there already is a powerrequest that uses this interface, used only by timer by the look of it.
+
+Notes:
+So according to confluence the interface is requesting and reading status on, off and toggle power.
+
+What should be in this epic:
+Ok so we have a lot of reueirements that specify that a a shutdow/restart shoud be done.
+These are not implemented or is that what is left.
+
+
+So if I just write it down :
+
+We have a way to request power on/off/toggle, we have a way to read the state of the power, we have a way to monitor the state.
+These should be implmented by the fault handler wich ends up returning a shutdown/restart request
+
+Then the caller that detected the error would receive a shytdown/restart request.
+
+
+Power interface
+
+
+
+We want to fulfill state chart diagrams as described in linked requirements by using the power interface to request power on/off/toggle.
+An example how to use the power interface can be found here: dim_driver.cpp:436 (SetPowerRequest) implemented but not used.
+
+
+Error dected should be reported to the fault handler, which will then send restart/shutdown request back to the caller.
+The fault handler is implemented and when error report is received, fault handler sends message to the recovery acation listener. (implemented in display_manager)
+Right now the recovery action listener only prints out the request, but it should be implemented to actually do the restart/shutdown with power interface.
+
+1. Detect error Done
+2. Report error to fault reporter Not done
+3. Fault handler sends request to recovery action listener Done
+4. Use recovery action listener to implement  restart/shutdown with power interface Not done
+
+
+Subtask1: Implement reporting to fault handler when error is detected. not within the scope of this epic?
+Subtask2: Implement recovery action listener to do restart/shutdown with power interface
+
+Req:
+https://haleytek.atlassian.net/browse/HT-79887 REQ-376602 Reboot        Safe state 1
+https://haleytek.atlassian.net/browse/HT-79999 REQ-376603 Reboot        Safe state 2
+https://haleytek.atlassian.net/browse/HT-80005 REQ-376604 Reboot        Safe state 3
+https://haleytek.atlassian.net/browse/HT-80006 REQ-376605 Reboot        Safe state 4
+https://haleytek.atlassian.net/browse/HT-80008 REQ-376606 Reboot        Safe state 5
+
+
+
+Requeirements that kind of match:
+
+https://haleytek.atlassian.net/browse/HT-79463 REQ-297482 Shutdown
+https://haleytek.atlassian.net/browse/HT-79876 REQ-403589 Shutdown
+https://haleytek.atlassian.net/browse/HT-79877 REQ-403593 Shutdown
+https://haleytek.atlassian.net/browse/HT-79999 REQ-376603 Reboot        Safe state 2
+https://haleytek.atlassian.net/browse/HT-80005 REQ-376604 Reboot        Safe state 3
+https://haleytek.atlassian.net/browse/HT-80025 REQ-295444 Reboot
+https://haleytek.atlassian.net/browse/HT-79345 REQ-311464 Power off
+https://haleytek.atlassian.net/browse/HT-79351 REQ-291981 Shutdown
+https://haleytek.atlassian.net/browse/HT-79353 REQ-295326 Power off
+https://haleytek.atlassian.net/browse/HT-79857 REQ-403616 Shutdown
+https://haleytek.atlassian.net/browse/HT-79887 REQ-376602 Reboot        Safe state 1
+https://haleytek.atlassian.net/browse/HT-80006 REQ-376605 Reboot        Safe state 4
+https://haleytek.atlassian.net/browse/HT-80008 REQ-376606 Reboot        Safe state 5
+
+
+
+
+
+
+
+
+
+
+
+
+Links to power request implementation:
+https://haleytek.atlassian.net/browse/HT-26566
+https://haleytek.atlassian.net/browse/HT-43728
+https://source.haleytek.net/c/haleytek/qnx/vendor/haleytek/driver/display/BSHALP_COMMON_S3_CSD_DIM/+/66154
+https://haleytek.atlassian.net/browse/HT-55694
+https://source.haleytek.net/c/haleytek/qnx/vendor/haleytek/driver/display/BSHALP_COMMON_S3_CSD_DIM/+/67117
+
+
+
+Hello
+
+Trying to refine this https://haleytek.atlassian.net/browse/HT-82576
+Is these assumptions correct?
+
+
+1. I see there is a powerinterface implemented by team Banana, is that the interface the epic is referring to?
+2. We should monitor state using power interface in DSM, to match our state vs there state and report any differences using by stop heartbeat.
+3. We should use power interface to toggle state when in grace period, befor salsa is active, from dim/hud (not CSD) driver if anything is wrong.
+
+it should be the "banana interface".
+However, I have not checked the latest status if it is fully in place with all capabilities we need.
+
+- Safety monitor scope could be good to double check with Ilker. I would consider it is a fault if we got notification of power off but everything
+    is still running fine, i.e. display has power. However, it is also useful in case of display powered off, as in that case, it is expected to see
+    events such as link down, etc. Exactly what to monitor and how to report also need to be aligned with Salsa, i.e. the one receiving HB.
+
+
+- For power request, i.e. we want to toggle power, If you check the safety state 1-5, whenever there is an error detected,
+  it likely ends up with reboot DIM, which requires to be done from zone controller side. it doesn't have to anything to do with grace period,
+  it could be during start up, it could also be when the car is not in driving mode, i.e.
+  SPA3 current design as I heard will not enter safe state even if display detect error until driver start to driver,
+  i.e. if car is parked and error is detected, DSM should be able to request recovery action as I understood.

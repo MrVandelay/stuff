@@ -1,0 +1,33 @@
+2026-09-01
+
+
+Check Story Maps on Jira
+Check out refinement board
+
+
+Write down setup
+    DIM 1.1
+    5
+    5.5
+    SPA3
+    SPA2
+    Cars
+
+Releases:
+    Write down releases (I know there are other pages but this is to learn)
+
+        Sofar Release 10 (SPA3 Week 42) (REl 3/13 Week 45d3)
+                         (SPA2 Week 42) (REl 2/26 Week 45d3)
+
+Heat map  join meeting (Red bugs?)
+
+Sprint goal
+
+Look at threads in DIM What are the for, write in dim.md, same as HUD
+
+Our tests
+
+My review: https://haleytek.atlassian.net/browse/HT-82576
+My clean up story: https://haleytek.atlassian.net/wiki/spaces/HI/pages/3130064947/Nebula+refinement+26w36
+
+

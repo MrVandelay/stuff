@@ -1,0 +1,111 @@
+Hello
+
+I'm looking into this https://haleytek.atlassian.net/jira/software/c/projects/HT/boards/107?selectedIssue=HT-78677
+  and wondering if you might provide some more info  on what do do.
+
+1  Is the idea  to enhance the test_hud_threads_status.py in haleytek-dhu-15 (not the unittest in saftey repo)?
+    And this to be done for all relevant threads?
+
+
+2. Validate that the threads run as expected in both normal and stressed conditions?
+    Test it in normal conditions I think is straightforward, but what about stressed conditions?
+    Are we talking about failed HW scenarios, or just high CPU load, or something else?
+    Shuld we intercept message sent to the threads and validate that they are processed correctly?
+
+
+
+
+
+So the test would "stress" the thread to fail and then verify that is actually fails.
+
+Then run normaly anv verifies that it actually running as expected.
+
+
+
+A - arguments
+B - what you are blocked on
+E - environment
+F - thread flags
+H - extended scheduling
+I - pid and tid
+J - state of the threads (sorted by tid) of the processes
+K - what kernel call was executed last
+L - session id of the process
+M - memory owned by the pid
+N - short name of the process
+O - shared libraries
+P - parent group
+Q - interrupts
+R - timers
+S - signal ignore mask
+T - number of threads
+U - uid
+V - gid
+W - euid
+X - egid
+Y - supplemental uid
+Z - supplemental gid
+a - pid
+b - tid
+c - code size (process)
+d - data size (process)
+e - parent pid
+f - process flags
+h - thread name
+i - runmask and inherit mask
+k - process abilities
+l - last CPU the thread ran on
+m - stack size (process)
+n - long name of process
+o - coids/fds of the process
+p - prio of thread
+q - backtrace
+s - signal queued mask
+t - start time
+u - amount of cpu seconds the process has consumed
+v - amount of cpu seconds system has consumed on behalf of the process
+w - the number of CPU seconds consumed by the children of the process
+x - the number of CPU seconds consumed by the kernel on behalf of the children of the process
+y - thread start time
+z - thread's sutime
+[ - channels
+\ - supplemental groups
+] - appid
+_ - security type
+# - rlimits
+
+ e
+
+pidin -F '%B %b %N %p %J %B %h %z %a %b %J' | grep dim_hud_d
+
+pidin -p <DITT_PID> threads
+
+The goal is to add a test that checks the status of the HUD threads and ensures they are functioning correctly.
+And this is done by checking the thread status and verifying that they are running as expected.
+
+The story mentions that at least one negative scenario (simulated delay or failure)
+
+
+
+
+Not obvious what the negative scenario is,  but it could be a simulated delay or failure in the thread's execution.
+The test should verify that the thread fails as expected in
+this scenario and then runs normally afterward.
+
+Regarding enhancement of the thread monitoring test. (https://haleytek.atlassian.net/browse/HT-78677)
+The ticket is about verifiing thread execution under both normal and stressed conditions.
+
+I created a test that checks the status of threads defined in predefined list (so it could be reused for SPA2 as well)
+It checks that the threads are running and their status is as expected. So far so good...
+
+Verify that we can identify thread have failed is a bit tricky.
+By using the slay command we can send a signal to the thread (tid) and then checks if it has changed.
+When seding kill signal the thread, all communication to the log afterwards cause the device to hang.
+
+Sending stop signal to a thread makes some of threads to go to stop (Not neccessarily the one you sent the signal to)
+There seems to be some issues communicate directly to a tid (thread) and not the process (pid), guessing it dependps on the implementation of the thread and how it handles signals.
+(Tried with a own implementation of a kill-thread but resulted in the same behavior.)
+Afterwards the execution can be resumed by sending SIGCONT signal to the thread.
+Is this good enough?
+
+

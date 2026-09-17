@@ -1,0 +1,80 @@
+
+1. Add to common/libled                             Done                HT-83848
+
+2. Add lib to safety build                          Done                HT-83634
+
+3 Add unitest for led
+    3.1 led_max20444.hpp                            Done                HT-84405
+    3.2 led_max25512.hpp
+    3.3 led_max25561.hpp
+    3.4 led_mpq3367.hpp
+
+4 Update manifest for LED support
+    Add libled to manifest
+
+5 Remove led from driver
+    4.1 Remove led from ALPNS_COMMON_S2_DIMHUD      Done                HT-84683
+    4.2 Remove led from TC_2569_1600_G2_CDD         Done                HT-84683
+    4.3 Remove led from AUO_1930_1200_G2_CDD        Done                HT-84683
+    4.4 Remove led from BSHALP_COMMON_S3_CSD_DIM    Done                HT-84683
+
+
+
+What repos are updated:
+
+haleytek/qnx/vendor/haleytek/driver/display/common/libled   manifest-safety-8155/components/safety-display/qm_common/libled/
+    94033   HT-84405    c9489870516cb20602eb50bb7186016a08c4bbf6 unittest led_max25561
+    93954   HT-85083    2005f813285daffd9d4587eff92e14c6b11b3645 unittest led_max20444
+    93492   HT-83848    11f973edbfc9da6a2dab1023a5d19a1157f70cd4 Refactor iLeddriver
+                        447f1a282af24723185a7745c019d1de62ad006e Master
+
+haleytek/qnx/vendor/haleytek/driver/display/ALPNS_COMMON_S2_DIMHUD      manifest-safety-8155/components/safety-display/driver/ALPNS_COMMON_S2_DIMHUD
+                                                                        manifest-safety-8255/components/safety-display/driver/ALPNS_COMMON_S2_DIMHUD
+    93504    HT-84683   90d64a778e152433579da6fb50357ef95d2ba622 Remove
+                        a46052184ead23b264ced2634805373b448e1593 Master
+
+
+haleytek/qnx/vendor/haleytek/driver/display/AUO_1920_1200_G2_CSD        manifest-safety-8155/components/safety-display/driver/AUO_1920_1200_G2_CSD
+    93505   HT-84683    d71072aa0f68b166c0701a3a9a17cd4972058c34    Remove
+                        3c1dd353750b4abf6175762d1260b5088368ed3a    Master
+
+haleytek/qnx/vendor/haleytek/driver/display/TC_2560_1600_G2_CSD         manifest-safety-8155/components/safety-display/driver/TC_2560_1600_G2_CSD
+    93506   HT-84683    df53dfa447ce4faf48bf0424bddf4e8c2b1a651b Remove
+                        14f986bbf645212fe602230efcbd1457c9ab9a52 Master
+
+haleytek/qnx/vendor/haleytek/driver/display/BSHALP_COMMON_S3_CSD_DIM    manifest-safety-8255/components/safety-display/driver/BSHALP_COMMON_S3_CSD_DIM
+    93507   HT-84683    cd54b936cc5ebae8f081bf1e83c9c464f1aade88 Remove
+                        33d2410221d16275e30842ed62b614af0eb8d119 Master
+
+
+haleytek/qnx/vendor/haleytek/safety_build   manifest-safety-8155/safety_build/
+                                            manifest-safety-8255/safety_build/
+    93511   HT-83634    0d275391942f0eb4c277c74d959f98dc4638acd2    Add libled to build
+                        ce53f82a4534527129e6844b66935795c1f0bab4    Master
+
+
+What to do next:
+Rebase
+
+
+
+How I think is the correct way/order to merge the libled repo:
+
+1. Commit changes to the libled repo. This repo is new and are at this point not part of any manifest. if everything works fine we can commit the update/added unitittest.
+2. Commit the addition to the  manifest repo,  this will include the libled in the manifest for both 8155 and 8255
+    When this is done the code for led will be present in both drivers and qm_common, only the drivers code will be usesd.
+3. Commit changes to the safety_build repo this will enable the libled to be built
+4. Commit the code to start using lib led for these repos:
+    - AUO_1920_1200_G2_CSD
+    - ALPNS_COMMON_S2_DIMHUD
+    - BSHALP_COMMON_S3_CSD_DIM
+    - TC_2560_1600_G2_CSD
+
+   This will start using the the libled instead of old led drivers.
+5. If the unitest was not finished in step 1 we can add the now and the manifest will be autobumped
+
+Questions:
+1. Does this seems like a good plan to merge the libled repo?
+2. Do I need to do anything to make the libled "offical"
+
+

@@ -1,0 +1,103 @@
+
+What is power interface ? https://source.haleytek.net/plugins/gitiles/haleytek/vendor/haleytek/powermoding_utilities/+/refs/heads/master
+
+What should the interface be?
+
+Where should it be inserted? (Improve safety monitoring)
+
+Whom reset it now?
+Should we reset it?
+
+
+
+
+
+
+[EPIC] Improve Safety Monitoring via Power Interface & State Chart Power Toggle Integration
+1. Summary & Objective
+Implement and integrate power control interfaces into the safety monitoring framework (e.g., within Display Controller / Safety Monitor) to fulfill safety state chart requirements. When critical safety or hardware error states are detected (such as deserializer lock loss, PMIC BIST faults, or video pipeline stalls), the safety monitor must be capable of executing deterministic power toggle/reset sequences via the designated power interface to transition the system to a safe or recovered state.
+
+2. Background & Problem Statement
+Current safety monitoring detects faults across peripherals (e.g., DIM, HUD, PMIC, GMSL serializers/deserializers) but lacks a direct, standardized interface to trigger controlled power toggling when recovery actions are required.
+
+According to the system Safety State Chart Diagrams, specific critical faults necessitate executing power cycling/toggling sequences rather than soft resets to ensure complete peripheral recovery and avoid undefined/flashing states.
+
+Integrating the safety monitor with the Power Interface / Power Manager ensures coordinated power state management, prevents conflicting state requests, and maintains awareness of actual vs. intended power rails.
+
+3. Technical Scope & Architecture
+
+
+
++--------------------------+         Fault Trigger / Recovery Request
+| Safety Monitor / Driver  | ------------------------------------------> +--------------------------+
+| (Heartbeat, BIST, Links) |                                             | Display / Power Controller|
++--------------------------+                                             +--------------------------+
+             ^                                                                         |
+             | Feedback / Power State Status (On, Off, Toggling)                       v
+             +---------------------------------------------------------- +--------------------------+
+                                                                         | Power Manager / PMIC HW  |
+                                                                         +--------------------------+
+Interface Integration:
+
+Implement/extend the interface (e.g., IPowerController / power_moding_interface.h or IPC/SOME/IP service) to support explicit power toggle requests (RequestPowerToggle, RequestPowerOff, RequestPowerOn).
+
+Subscribe to power status feedback (ReportPowerStatus) so safety routines are aware when power rails are actively cycling.
+
+State Machine Alignment:
+
+Align the internal safety state machine transitions with specified safety state chart diagrams.
+
+Ensure appropriate timing windows (e.g., minimum power-down delay, GMSL re-lock settling times) during power toggle execution.
+
+Safety & Heartbeat Management:
+
+Suppress false heartbeat / timeout alarms during intentional power toggling phases.
+
+Re-arm safety checks only after post-toggle initialization and link lock are confirmed.
+
+4. Requirements & Traceability
+Category
+
+Requirement ID (Placeholder)
+
+Description
+
+Functional Safety
+
+REQ-SAFE-PWR-01
+
+The Safety Monitor shall request a hardware power toggle via the Power Interface upon entering designated critical error states per Safety State Chart.
+
+Interface
+
+REQ-SAFE-PWR-02
+
+The Power Interface shall expose non-blocking power toggle methods with status callback notifications.
+
+Timing & State
+
+REQ-SAFE-PWR-03
+
+Power toggle execution shall adhere to minimum power-down hold duration and re-lock timeout limits.
+
+Diagnostics & Logging
+
+REQ-SAFE-PWR-04
+
+All safety-initiated power toggle events, trigger causes, and recovery outcomes shall be logged (e.g., via DLT / persistent fault storage).
+
+5. Acceptance Criteria (Definition of Done)
+[ ] State Machine Compliance: Safety monitor transitions match the approved Safety State Chart diagrams for all fault recovery paths.
+
+[ ] Power Interface Integration: Power toggle requests and status callbacks are fully implemented and integrated across safety monitor and power manager components.
+
+[ ] Fault Recovery Verification: Injected hardware/communication faults (e.g., link drop, PMIC BIST failure) trigger power toggle routines and successfully re-initialize the target device.
+
+[ ] Traceability: All relevant system safety requirements and software design documents (SWDD/SWAD) are linked to this Epic.
+
+[ ] Automated Testing:
+
+Unit tests covering state transition coverage and error path handling.
+
+Target/HIL integration tests (e.g., Pytest test suites on UXC target) verifying real-world power toggle and link re-lock.
+

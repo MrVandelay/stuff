@@ -1,10 +1,4 @@
-
-
-What does the different drivers do, what configuration do they support
-How do the use DSM (Data safety manager) and DTH (Data transfer handler) for safety critical data handling
-
-# SPA2
-
+What does the different drivers do, what configuration do they support How do the use DSM (Data safety manager) and DTH (Data transfer handler) for safety critical data handling # SPA2
 # SPA3
 DIMD2.0 → SPA3 V436
 DIMD2.5 → SPA3 V326

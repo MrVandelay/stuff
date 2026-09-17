@@ -1,0 +1,403 @@
+Ok
+
+So the idea is t get the temperature from the AD and log in to EEPROM.
+
+I would like to have in as a separate library, so we can use it in SPA2 and SPA3.
+The library will be called LibLogTemperature.
+
+
+
+
+Fetching data:
+
+As we already fetch temperature from ADC (among other things) we should be able to reuse some of the code.
+Now the adc values are used by DimDriver, more specifically the Derating thread and also for extending temperature logging.
+I would like to have Derating in a separate class (library) and was thinking of separating in this story since we are doing some
+refactoring to make it match new functionality but Derating thread is to intervened in the DimDriver to do that easily.
+Temperate logging piggybacks on the Derating thread (It never communicates with ADC directly but instead uses the
+values that the Derating thread has already fetched from the ADC).
+
+This could/should be refactored to a separate library but same as Derating thread, this is not the story for that.
+
+
+To draw a picture:
+
+                  +----------------+
+                  |  Temp logging  |
+                  +----------------+
+                           ^
+                           |
+            +--------------+
+            |
+   +-----------------+
+   |                 |
+   | DeRating thread |
+   |                 |
+   +-----------------+
+        ^
+        |
+        +-----------------------+
+                                |
+                                v
+                             +---------------------+
+                             |                     |
+                             |     ADC Thread      |
+                             |                     |
+                             +---------------------+
+
+                            V
+
++-----------------+ +----------------+ +---------------------------+
+|                 | |                | |                           |
+| DeRating thread | | Temp logging   | |  LibLogTemperature thread |
+|                 | |                | |                           |
++-----------------+ +----------------+ +---------------------------+
+       ^                      ^                     ^
+       |                      |                     |
+       +---------------+      |       +-------------+
+                       |      |       |
+                       v      v       v
+                   +---------------------+
+                   |                     |
+                   |     ADC Thread      |
+                   |                     |
+                   +---------------------+
+
+I was considering how to communicate Between Derating and LibLogTemperature thread.
+I liked the idea of using shm_open(posix) to create a shared memory object for the producer thread to write to and subscriber to read
+(This solution is similar to create nodes to communicate between threads.) It would also use the MsgReceivePulse and MsgSendPulse to notify
+the subscriber that new data is available. This would make the solution even more decoupled which is nice.
+However for this case where all threads are in the same process I think it is overkill.
+
+Instead I suggest we update the ADC thread to support multiple subscribers but keep the communication to function call and std::unique_lock. (similar to today)
+
+class Tiads1015 {
+public:
+    void publish(int new_data) {
+        {
+            std::lock_guard<std::mutex> lock(mtx_);
+            latest_data_ = new_data;
+            sequence_number_++;
+        }
+        cv_.notify_all(); // Notify subscribers
+    }
+
+    void stop() {
+        {
+            std::lock_guard<std::mutex> lock(mtx_);
+            finished_ = true;
+        }
+        cv_.notify_all(); // Notify subscribers to stop
+    }
+
+    std::optional<int> get_data(int& last_seen_seq) {
+        std::unique_lock<std::mutex> lock(mtx_);
+
+        cv_.wait(lock, [this, last_seen_seq]() {
+            return sequence_number_ > last_seen_seq || finished_;
+        });
+
+        if (sequence_number_ > last_seen_seq) {
+            last_seen_seq = sequence_number_;
+            return latest_data_;
+        }
+
+        return std::nullopt; // Kanalen stängd
+    }
+
+private:
+    int latest_data_ = 0;
+    int sequence_number_ = 0;
+    bool finished_ = false;
+    std::mutex mtx_;
+    std::condition_variable cv_;
+};
+
+
+Logging to EEPROM:
+    We should log:
+     - All time high and low.
+     - Min and max for each drivecycle
+     - Average temperature for every 10 minutes period
+
+
+
+    +-40 - 90 degree => 130 degrees and with 5 degree resolution => 27   0 =     < -36
+                                                                         1 = -35 - -31
+                                                                         2 = -30 - -26
+                                                                         3 = -25 - -21
+                                                                         4 = -20 - -16
+                                                                         5 = -15 - -11
+                                                                         6 = -10 -  -6
+                                                                         7 =  -5 -  -1
+                                                                         8 =   0 -   4
+                                                                         9 =   5 -   9
+                                                                         10 = 10 -  14
+                                                                         11 = 15 -  19
+                                                                         12 = 20 -  24
+                                                                         13 = 25 -  29
+                                                                         14 = 30 -  34
+                                                                         15 = 35 -  39
+                                                                         16 = 40 -  44
+                                                                         17 = 45 -  49
+                                                                         18 = 50 -  54
+                                                                         19 = 55 -  59
+                                                                         20 = 60 -  64
+                                                                         21 = 65 -  69
+                                                                         22 = 70 -  74
+                                                                         23 = 75 -  79
+                                                                         24 = 80 -  84
+                                                                         25 = 85 -  89
+                                                                         26 =    >  90
+
+Loggfunktion            Size per bin/value      Values          Number of bins/values       Total size (Bytes)
+
+
+Min/max                 1 byte(uint8_t)         2 values        1                           1x2x1 = 2 bytes
+
+Histogram: Min/Max      2 bytes(uint16_t)       2 values        27 bins                     2x2x27 = 108 bytes
+per drive cycle
+
+Histogram: Average
+(10 min-period)         4 bytes (uint32)        1 values        27 bins                     4x1x27 = 108 bytes
+
+
+Total memory needed                                                                         218 bytes
+
+According to the EEPROM datasheet we can us 0x0200 - 0x1FFF for logging.
+This gives us 0x1E00 bytes of memory to use for logging. This is more than enough for our needs.
+
+
+Right now the DimEepromDriver implemenss som specif read function GetDisplayserialNumber etc
+It also have some generic stuff  like writeTo, ReadFrom (public) and REadAndVerifyCrtc, REadWithFallback and some constexpr
+
+I would like to move the generic stuff to a new class called DimEepromDriverGeneric and keep the DimEepromDriver for the specific stuff.
+
+            class DimEepromDriverGeneric
+                protected:
+                    ReadAndVerifyCrc
+                public:
+                    writeTo
+                    ReadFrom
+
+            class DimEepromDriver : public DimEepromDriverGeneric
+                public:
+                    GetDisplaySerialNumber
+                    GetDisplayPartNumber
+                    GetDisplayManufactureDate
+                    GetDisplayManufactureWeek
+                    GetDisplayManufactureYear
+                    GetDisplayManufacturerName
+                    GetDisplayManufacturerId
+                    GetDisplayModelName
+                    GetDisplayModelId
+                    GetDisplayVersion
+                    GetDisplayRevision
+                    GetDisplayType
+                    GetDisplaySize
+                    GetDisplayColorDepth
+                    GetDisplayMaxBrightness
+                    GetDisplayMinBrightness
+                    GetDisplayMaxContrastRatio
+                    GetDisplayMinContrastRatio
+                private:
+                    REadWithFallback
+
+            class DimLogEepromDriver: public DimEepromDriverGeneric
+                public:
+                    LogMinMax
+                    LogHistogramMinMax
+                    LogHistogramAverage
+                    GetLogMinMax
+                    GetLogHistogramMinMax
+                    GetLogHistogramAverage
+
+    This way we can create our own DimLogEepromDriver in libTemp without the overflow.
+
+
+
+Keep track of drivecycle:
+    The start/end of drivecycle is defined by call to StateOff/StateOn in DimDriver
+    From that function we can call stop/start drivecycle in libTemp.
+
+
+
+            Stories:
+            Update document  to reflect the new usage of EEPROM
+
+Todo:
+We want a new repo for LibLogTemperature
+
+AC:
+A new repo is available
+
+
+
+
+3 and 4 can be done in parallel. 1 and 2 should be done before 5 because it takes time.
+
+1. Request a new repo
+2. Add new repo to the build system
+
+3. Update ADC thread to support multiple subscribers
+
+4. Update DimEepromDriver to write histogram log to EEPROM
+
+    class DimEepromDriverGeneric
+            protected:
+                ReadAndVerifyCrc
+            public:
+                writeTo
+                ReadFrom
+
+    class DimEepromDriver : public DimEepromDriverGeneric
+        public:
+            GetDisplaySerialNumber
+            .
+            .
+            .
+            GetDisplayMinContrastRatio
+        private:
+            ReadWithFallback
+
+    class DimLogEepromDriver: public DimEepromDriverGeneric
+        public:
+            LogMinMax
+            LogHistogramMinMax
+            LogHistogramAverage
+            GetLogMinMax
+            GetLogHistogramMinMax
+            GetLogHistogramAverage
+
+
+5. Implement LibLogTemperature to qm/common
+
+    class LogTemperature {
+        public:
+            LogTemperature(std::unique_ptr<DimLogEepromDriver>, std::function<ChannelValuesUpdated()> getValues) = default;
+            explicit LogTemperature();
+            virtual ~LogTemperature() noexcept = default;
+            LogTemperature(const LogTemperature&) = delete;
+            LogTemperature(LogTemperature&&) = delete;
+            LogTemperature& operator=(const LogTemperature&) = delete;
+            LogTemperature& operator=(LogTemperature&&) = delete;
+
+            Start();
+            Stop();
+
+    };
+
+6. Start using the new LogTemperature class in DimDriver
+
+
+Here is a refined epic that need some review. https://haleytek.atlassian.net/browse/HT-52370
+Tried something new by documenting my thinking process and how I came to the suggested refinement for the epic.
+So pleas read the comment before looking at the stories for a better understanding how I was thinking and what I was trying to achieve.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1. Make a scetch Done
+2. Create subtasks
+3. Check out the requirements Done
+
+Questions:
+    1. Is it only for SPA3 or also for SPA2?
+    2. Seperate threads, analyzed
+    3. It sayes each display, meaning dim and hud? CSD has seperate ticket
+    4. Any rules for saving data to eeprom
+    5. Have we used any of the available memory in the eeprom for logging before?
+    6. Why do we read ADC value with function call and not qnx read/write? Ok do it as function call.
+    7. How do we know if drivecycle is done?
+    8. Can we create seperate implementation for DimEepromDriver and read/write it from a different thread?
+    9. How to get the data, should we get the data.?
+    10 Should we add functionality to clear data.?
+
+
+
+We store every 10 min 4294967295 times =>  42949672950
+
+
+Notes:
+    Log All time high and low.
+    Log min and max for each drivecycle
+    Log average temperature for every 10 minutes period
+
+
+
+    +-40 - 90 degreee => 130 degrees and with 5 degree resolution => 26  0 = - 40           or just store - 40
+                                                                         1 = - 35                         - 35
+                                                                         2 = - 30                         - 30
+                                                                         3 = - 25                         - 25
+                                                                         4 = - 20                         - 20
+                                                                         5 = - 15                         - 15
+                                                                         6 = - 10                         - 10
+                                                                         7 = -  5                         -  5
+                                                                         8 =    0                            0
+                                                                         9 =    5                            5
+                                                                         10 =  10                           10
+                                                                         11 =  15                           15
+                                                                         12 =  20                           20
+                                                                         13 =  25                           25
+                                                                         14 =  30                           30
+                                                                         15 =  35                           35
+                                                                         16 =  40                           40
+                                                                         17 =  45                           45
+                                                                         18 =  50                           50
+                                                                         19 =  55                           55
+                                                                         20 =  60                           60
+                                                                         21 =  65                           65
+                                                                         22 =  70                           70
+                                                                         23 =  75                           75
+                                                                         24 =  80                           80
+                                                                         25 =  85                           85
+                                                                         26 =  90                           90
+            Store in int8_t, 1 byte, 0 = -40, 26 = 90, 5 degree resolution
+
+            If we store  two values min/max in a binary stuct we can store 2 values in 1 byte.
+
+
+            struct TempMinMax {
+                uint8_t min : 4;
+                uint8_t max : 4;
+            };
+            LogPoint point{3,26}; // min = -25, max = 90
+
+
+            Each min/max histogram  will save 65535 values  16 bits  => 65535 * 1 bytes
+            The avarage temperature for every 10 minutes period will be stored in 429496729 32 bits => 429496729 * 1 bytes
+
+
+
+
+LibTemp
+    - Log all time high and low
+    - Log min and max for each drivecycle
+    - Log average temperature for every 10 minutes period
+
+    assumptions:
+    Dependencies:
+        - EEPROM
+        - ADC
+
+
+    Interface:
+        Init
+        Start
+        Stop
+
+    Implementation:
+       Loop
+            Every second:
+                1. Read ADC value
+                2. Calculate Min/Max temperature  and update eeprom if needed
+                3. Calulate avarage temperature and save to ram
+            Every 10  minutes:
+                Write average temperature to eeprom
+
+
+
+
+

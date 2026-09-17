@@ -1,23 +1,76 @@
+
+slog2info -WS | grep -E "Gustaf"
+slog2info -WS | awk '/Gustaf/{p=2} p>0{print; p--}'
+uds_toolkit -vv --doip 1205 --session EXTENDED -r 1205:192.168.1.1  read_data F186
+
+cat /etc/sdboss/ht_doip_router/ht_doip_router_configuration.json
+uds_toolkit_ht_ref --doip 1841 read_data F12E
+./nonhlos/vendor/tools/scripts/copy_build_artifacts.py nonhlos/vendor/haleytek/moose/comet.json nonhlos --out flashfiles_out && cd flashfiles_out && ./flash_qnx.shx && cd .. && fastboot reboot
+
+qnx_laod scp /home/fredrik/sources/manifest-safety-8155/build/qnx7_aarch64le/components/safety-display/driver/ALPNS_COMMON_S2_DIMHUD/common_driver/dim_hud_d/dimd root@192.168.1.1:/tmp/
+
 # TODO
 A better way to jump between repo
 
+
+# Move branch to another sha1
+git reset --hard SHA1
+
+# Rebase a chain of commits
+git rebase --update-refs main
+
+# Undo last commit but keep changes
+git reset --soft HEAD~1
+
+# change a specific sha1 to another sha1
+sed -i 's/old/new/g' ht_safety_qc8255.xml
 
 SWDL (Software Download Engine)
 SWUT Software Update Tool
 
 # unittest
-ctest --preset=linux_x86-64 --output-junit "xml/testreport.xml"
-or
-make linux-ut
 
-Report
-manifest_safety/build/linux_x86-64/coverage_reports/coverage_details.html
+Q: How to buiild and  run unittest from cmake with target instead of running bin
+Q:
 
-Unit test on target
+
+## run specif test on linux
+./tools/haleytek/docker-images/run.py --target safety
+build it:
+ cmake --build build  --target haleytek_led_utils_ut
+Run it:
+./build/components/safety-display/qm_common/libled/test/ut/haleytek_led_utils_ut
+
+
+## build specific target
+
+./tools/haleytek/docker-images/run.py --target safety
+source safety_build/safety-env.sh 8155
+cmake --build --preset qnx7_aarch64le -j "$(nproc)" --target dimd
+push it
+scp /home/fredrik/sources/manifest-safety-8155/build/qnx7_aarch64le/components/safety-display/driver/ALPNS_COMMON_S2_DIMHUD/common_driver/dim_hud_d/dimd root@192.168.1.1:/tmp/
+TYhen on target
+mount -o remount,rw /
+mv /tmp/dimd /usr/bin/dim_hud_d
+reset
+
+
+## Code covarage on target:
+
+./tools/haleytek/docker-images/run.py --target safety
+source safety_build/safety-env.sh 8155
 make qnx
 cmake --build --preset qnx7_aarch64le -j "$(nproc)" --target install-all-safety-unittests
 tools/haleytek/safety_test_tools/run_tests_on_target.py --dhu-image COMET --copy-result-xml reports_xmls
 
+### Report can be found here:
+manifest_safety/build/linux_x86-64/coverage_reports/coverage_details.html
+
+
+## Not sure about this one:
+ctest --preset=linux_x86-64 --output-junit "xml/testreport.xml"
+or
+make linux-ut
 
 
 AI
@@ -97,7 +150,7 @@ $ picocom -b 115200 /dev/ttyUSB0
 
 
 # Disconnect
-$ ctrl-a ctrl-x
+$ ctrl-b ctrl-x
 
 # Connect over ssh
 
@@ -111,7 +164,7 @@ $ ctrl-a ctrl-x
 Display messages from the system log
 
 - For logging of display driver
-    `slog2info -w | grep dimd
+    slog2info -w | grep dim_hud_d
 
 - For logging DisplaySafetyMonitor
     slog2info -w | grep DisplaySafetyManager
@@ -253,6 +306,9 @@ make qnx-install
     $device-testing-ht-433366 devicetek run-pytest ./tools/haleytek/platform/test/comet/display/tests/csd/test_csd_status.py
 
     devicetek -l DEBUG  run-pytest --pytest-arg="-s -vv" --disable-file-logging --disable-dlt-logging ./tools/haleytek/platform/test/shared/logs_collection_test/test_bugreport_content.py::test_no_unhandled_dumpstate_board_bin_files_exist
+
+    devicetek -l INFO  run-pytest --pytest-arg="--log-cli-level=INFO  -s -vv" --disable-file-logging --disable-dlt-logging ./tools/haleytek/platform/test/comet/display/tests/dim/test_dim_threads_status.py
+
 ## Generate device_config.json
     devicetek -l DEBUG generate-config
 
@@ -432,4 +488,65 @@ IT will first firs run src_bulder
 Set DOCKER_RUNNER_NAME to src_builder_qnx_570_1781023771882115055
 Then call uni_run.sh with the docker runner name
 
+
+Just build test
+    cd ~/sources/<manifest-safety-8155>
+    $ ./tools/haleytek/docker-images/run.py --target safety
+
+    make qnx-tools
+    cmake --build build --target haleytek_led_utils
+
+
+
+
+# Push i2c_tools
+$ scp /home/fredrik/sources/haleytek-dhu-15/qnx/apps/qnx_ap/cvendor/haleytek/driver/display/prebuilts/display_dev_tools/bin/i2c_tool root@192.168.1.1:/tmp/
+$QNX# chmod +x /tmp/i2c_tool
+
+scp /home/fredrik/sources/manifest-safety-8155/build/qnx7_aarch64le/components/safety-display/display_dev_tools/kill_thread/kill_thread  root@192.168.1.1:/tmp/
+
+To read a register:
+/tmp/i2c_tool r /dev/i2c5 0x68 0x02 0 1
+
+This will read from noed /dev/i2c5, device address 0x68, register 0x02, 8 bits (0 = 8 bits, 1 = 16 bits), and read 1 byte (1 = read 1 byte, 2 = read 2 bytes, etc.)
+
+
+
+
+
+cmake --build --preset qnx7_aarch64le -j "$(nproc)" --target kill_thread
+
+
+
+
+devicetek test-mapping list-tests qnx/apps/qnx_ap/cvendor/haleytek/driver/display/prebuilts/bshalp_common_s3_csd_dim/
+
+
+
+
+
+
+devicetek test-mapping --stage presubmit --product asteroid --android-version 15 --with-capabilities filter-test-plan --test-plan-path test_plan.json
+
+
+
+devicetek test-mapping list-tests qnx/apps/qnx_ap/cvendor/haleytek/driver/display/prebuilts/bshalp_common_s3_csd_dim/ | devicetek test-mapping --stage presubmit --product asteroid --android-version 15 --with-capabilities filter-test-plan  > test_plan.json
+
+
+
+sshfs -o uid=1014,gid=1014 fredrik@172.20.20.105:/home/fredrik/sources/flashfiles/flashfiles_991693  /home/fredrik/sources/flashfolder/
+
+
+
+
+
+Decide where what test to run in gate? We have HT_TEST_MAPPING
+
+We also have it devided in shared, comet, asteroid
+
+We also have it devided in VCC in there testplan
+
+When we push someting in tool/haleytek/platform/test/comet|asteroid|shared it will run some gate but not all
+
+That is executed when we push binary?? and or push to VCC
 

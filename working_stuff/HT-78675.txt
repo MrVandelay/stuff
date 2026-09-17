@@ -1,0 +1,124 @@
+
+Done
+1. Split XX_fixtures.py into multiple files where fixures in one and
+    common used code in another file. We dont want to have to import fixtures
+
+2. Include fixtures from no direct relative by adding to base conftest.py file.
+    Then we can start using fixtures in any test file without having to import them.
+    We should not import fixtures or add them to pytest_plugins in any other conftest.py file.
+
+3. Make display_log_fixtures a real fixture, then we can inlude it as a normal fixture and its easier to
+    grasp  that it is being used as a fixture.
+
+
+Create a confpage
+
+
+
+Duplicate of assert_brightness_not_updated inf both asserttions and display_verification_utils.py
+Done
+
+
+test_dim_power_state from shared only used in comet?
+Do we need to have it in comet when it is already in shared?
+Done
+
+
+DiagnosticStackConfig
+    this is a fixture that exists both in comet and shared.
+
+
+
+I see a bit of confustion with our organization of folder structure and specificly
+where and how to place fixures.
+
+So before I start rearranging things I want to confirm with the team
+that this is how we want to organize our fixtures.
+
+1. Project specific fixtures
+Fixtures that are used by tests "below" a certain level should
+be placed in conftest.py file on that level.
+Like this when the folder structure we have agred on before is in place.
+
+comet/
+    ├── conftest.py  # Fixtures for all displays
+    ├── dim/
+    │   ├── conftest.py  # Fixtures for dim only
+    │   ├── test_module1.py
+    │   └── test_module2.py
+    └── hud/
+        ├── conftest.py  # Fixtures for hud only
+        └── test_submodule.py
+
+This is prefered way of doing this according to pytest documentation.
+No need to import fixtures from other conftest.py files, pytest will find them automatically.
+
+
+2. Shared fixtures between projects
+For fixtures that can be used by both comet and asteroid cant be placed in conftest.py files
+unless
+
+
+
+3 cases:
+1. test that want to use the fixture defined in the same project. (Direct ancestor)
+
+    Here we put all fixture in a conftest.py within each folder and they will be
+    available to all tests in that folder and below.
+
+    This is the preferred way of doing this according to pytest documentation.
+
+2.test that want to use the fixtures from shared folder (not a direct ancestor)
+    Here we we should define the fixture we want to use in
+    pytest_plugins = [
+        "shared_fixtures.db_fixtures",
+    ]
+    It is not good practice to import the fixture directly
+
+    Since the fixtures are being included this way they cant be put in a conftest.py file
+    since those are not allowed to be included
+
+
+3. test in shared folder that want to use the fixture define in shared folder. (not direct ancestor)
+    This will be same as case 2
+
+
+shared/
+    │
+    ├──display/
+    │  ├──conftest.py                       # Fixtures for all displays only used in shared
+    │  ├──dim/
+    │  │  ├── conftest.py                   # Fixtures for all dims but only used in shared
+    │  │  ├── test_module1.py
+    │  │  └── test_module2.py
+    │  └──hud/                              # Fixtures for all huds only used in shared
+    │      ├── conftest.py
+    │      └── test_module.py
+    │
+    └──utility/
+       └──display
+          ├──dim
+          ├──hud
+          └──fixtures                       # Fixtures for all displays that can be include in projects
+             ├── power_relay_fixtures.py
+             ├── display_thread_fixtures.py
+             └── display_log_fixtures.py
+
+
+
+comet/
+    │
+    ├──display/
+       ├──contest.py           # Fixtures for displays on comet only
+       ├──dim/
+       │  ├── conftest.py      # Fixtures for dim on comet only
+       │  ├── test_module1.py  # If we want to use fixture defined in comet nothing need to be done
+       │  └── test_module2.py
+       └──hud/
+          ├── conftest.py      # Fixtures for hud on comet only
+          └── test_module.py   # If we want to use shared fixture add pytest_plugins =
+                               # ["shared.utility.display.fixtures.power_relay_fixtures"]
+
+
+
+

@@ -1,0 +1,8 @@
+1.  Is't all name already test_XXX
+
+2. Should I change only for dim,hud
+
+3. Should we remove the dim, hud part of the name?
+
+
+

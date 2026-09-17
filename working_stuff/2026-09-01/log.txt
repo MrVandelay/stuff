@@ -1,0 +1,238 @@
+Startup complete
+virtio_audio_outq_thread:OUTQ01_0101: poll timed out for channel pcmC1D1p fd 70 timeout 32
+virtio_audio_outq_thread:OUTQ01_0101: poll timed out for channel pcmC1D1p fd 70 timeout 32
+virtio_audio_outq_thread:OUTQ01_0101: poll timed out for channel pcmC1D1p fd 70 timeout 32
+virtio_audio_outq_thread:OUTQ01_0101: poll timed out for channel pcmC1D1p fd 70 timeout 32
+virtio_audio_outq_thread:OUTQ01_0101: poll timed out for channel pcmC1D1p fd 70 timeout 32
+ht_early_system_health_check: The file /tmp/boot_complete exists.
+ht_early_system_health_check: BootComplete file present. Exiting
+
+IHU5-QNX# clear
+IHU5-QNX# echo 4 > /dev/display/dim/state
+IHU5-QNX#  echo 2 > /dev/display/dim/state
+IHU5-QNX# cat /dev/display/dim/actual_state
+2IHU5-QNX# slog2info -w | grep dim_hud_d
+Aug 19 15:17:32.088                     ksh.258110               stdout*     0  /usr/bin/dim_hud_d_launcher selected the configuration : dhu10
+Aug 19 15:17:32.110                     ksh.258110               stdout      0  /usr/bin/dim_hud_d_launcher: Failed to read! Starting with default value 1
+Aug 19 15:17:32.118                     ksh.258110               stdout      0  /usr/bin/dim_hud_d_launcher: System mode is SA8155_DHU_UFS_NORMAL
+Aug 19 15:17:32.118                     ksh.258110               stdout      0  /usr/bin/dim_hud_d_launcher: System is in normal mode, setting dim to 1
+Aug 19 15:17:32.118                     ksh.258110               stdout      0  /usr/bin/dim_hud_d_launcher dim 1 hud 1
+Aug 19 15:17:32.137               dim_hud_d.258110                           0  -----ONLINE-----
+Aug 19 15:17:32.137               dim_hud_d.258110              default*     0  main: DIM is selected
+Aug 19 15:17:32.137               dim_hud_d.258110              default      0  main: HUD is selected
+Aug 19 15:17:32.137               dim_hud_d.258110              default      0  Current SoC: 8155
+Aug 19 15:17:32.137               dim_hud_d.258110              default      0  Current displays enabled DIM: true HUD: true
+Aug 19 15:17:32.155               dim_hud_d.258110              default      0  Registered to Power Manager
+Aug 19 15:17:32.157               dim_hud_d.258110              default      0  DIM HUD: GracePeriodTimer: TimerMonitor::Run, pid: 258110 tid: 13
+Aug 19 15:17:32.157               dim_hud_d.258110              default      0  DIM HUD: GracePeriodTimer: TimerMonitor::Start: Timer started, one-shot!
+Aug 19 15:17:32.157               dim_hud_d.258110              default      0  DIM HUD: GracePeriodTimer: TimerMonitor::Run Timer has id: 1
+Aug 19 15:17:32.158               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Run, pid: 258110 tid: 14
+Aug 19 15:17:32.158               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Start: Timer started, periodic!
+Aug 19 15:17:32.158               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Run Timer has id: 2
+Aug 19 15:17:32.166               dim_hud_d.258110              default      0  SER: Turned the serializer ON
+Aug 19 15:17:32.167               dim_hud_d.258110              default      0  DHU serializer: MAX96789
+Aug 19 15:17:32.211               dim_hud_d.258110              default      0  DHU is in splitter mode now
+Aug 19 15:17:32.211               dim_hud_d.258110              default      0  Serializer initialization is done
+Aug 19 15:17:32.212               dim_hud_d.258110              default      0  Thread is ready
+Aug 19 15:17:32.213               dim_hud_d.258110              default      0  Status check: DIM=0, HUD=0, grace_period_expired=0
+Aug 19 15:17:32.213               dim_hud_d.258110              default      0  Thread is ready
+Aug 19 15:17:32.213               dim_hud_d.258110              default      0  Link status,  Dim:0 Hud:0
+Aug 19 15:17:32.213               dim_hud_d.258110              default      0  DIM HUD link down, link speed:6, grace period:0
+Aug 19 15:17:32.213               dim_hud_d.258110              default      0  DIM: calling dsm::Request::kStopMonitoring
+Aug 19 15:17:32.213               dim_hud_d.258110              default      0  [dsm_interface.cpp:44] DsmInterface: SendRequest: Sending request 1
+Aug 19 15:17:32.213               dim_hud_d.258110              default  16012  dim_hud_d[sysctrl.c:89]: sysctrl: init
+Aug 19 15:17:32.213               dim_hud_d.258110              default  16012  dim_hud_d[sysctrl.c:118]: sysctrl: init ready
+Aug 19 15:17:32.213               dim_hud_d.258110              default  16012  dim_hud_d[sysctrl_service.c:180]: sysctrl_start_service: start for /dev/dimhud_dhu
+Aug 19 15:17:32.214               dim_hud_d.258110              default      0  [dsm_interface.cpp:72] DsmInterface: SendRequest: Received response 0
+Aug 19 15:17:32.214               dim_hud_d.258110              default      0  DIM: StopHealthMonitoring: Success response = 0
+Aug 19 15:17:32.214               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Start: Timer is already running
+Aug 19 15:17:33.159               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Run Pulse received, counter_:-1, timer, id:2, tid:14
+Aug 19 15:17:33.159               dim_hud_d.258110              default      0  ChangeLinkSpeed, Timeout!
+Aug 19 15:17:33.159               dim_hud_d.258110              default      0  Link status, dim:0 hud:0
+Aug 19 15:17:33.159               dim_hud_d.258110              default      0  Updated the link speed to 3 Gbps
+Aug 19 15:17:33.159               dim_hud_d.258110              default      0  SER: Changing the link speed to 3Gbps
+Aug 19 15:17:33.200               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Run Reached end of timer
+Aug 19 15:17:33.200               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Stop Timer has been stopped and joined
+Aug 19 15:17:33.200               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Stop Timer is stopped
+Aug 19 15:17:33.200               dim_hud_d.258110              default      0  Current Link status,  Dim:1 Hud:0
+Aug 19 15:17:33.200               dim_hud_d.258110              default      0  Requested Power States, Dim:4 Hud:4
+Aug 19 15:17:33.200               dim_hud_d.258110              default      0  DIM: Link is up
+Aug 19 15:17:33.229               dim_hud_d.258110              default      0  DIM: Init: target power state 4
+Aug 19 15:17:33.229               dim_hud_d.258110              default      0  DIM: Enabling video pipeline X on serializer
+Aug 19 15:17:33.231               dim_hud_d.258110              default      0  DIM: Driver is running
+Aug 19 15:17:33.231               dim_hud_d.258110              default      0  HandleLinkStatus, 0.030999
+Aug 19 15:17:33.388               dim_hud_d.258110              default      0  ErrbMonitor: Received ERRB interrupt
+Aug 19 15:17:33.389               dim_hud_d.258110              default      0  Status check: DIM=1, HUD=1, grace_period_expired=0
+Aug 19 15:17:33.389               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::CloseChannel: Connection already closed for timer
+Aug 19 15:17:33.389               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::CloseChannel: Channel already closed for timer
+Aug 19 15:17:33.389               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Stop Timer is stopped
+Aug 19 15:17:33.389               dim_hud_d.258110              default      0  Current Link status,  Dim:1 Hud:1
+Aug 19 15:17:33.389               dim_hud_d.258110              default      0  Requested Power States, Dim:4 Hud:4
+Aug 19 15:17:33.389               dim_hud_d.258110              default      0  HUD: Link is up
+Aug 19 15:17:33.408               dim_hud_d.258110              default      0  HUD: Enabling video pipeline Z on serializer
+Aug 19 15:17:33.410               dim_hud_d.258110              default      0  HUD: Init: target power state 4
+Aug 19 15:17:33.410               dim_hud_d.258110              default      0  HUD: MakeMcuSleep: Putting MCU to sleep
+Aug 19 15:17:33.410               dim_hud_d.258110              default      0  HUD: GoToSleep
+Aug 19 15:17:33.411               dim_hud_d.258110              default      0  HUD: Waiting 4 s for mirror to fold before entering sleep
+Aug 19 15:17:33.411               dim_hud_d.258110              default      0  HUD: Stop waiting for mirror
+Aug 19 15:17:33.411               dim_hud_d.258110              default      0  HUD: MakeMcuSleep Power state is OFF
+Aug 19 15:17:33.411               dim_hud_d.258110              default      0  HUD: Driver is running
+Aug 19 15:17:33.411               dim_hud_d.258110              default      0  HandleLinkStatus, 0.022000
+Aug 19 15:17:33.728               dim_hud_d.258110              default      0  Client requests power state change to state 2
+Aug 19 15:17:33.728               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState from 4 to 2
+Aug 19 15:17:33.728               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is PRE ON
+Aug 19 15:17:33.729               dim_hud_d.258110              default      0  HUD: Client requests power state change to state 2
+Aug 19 15:17:33.729               dim_hud_d.258110              default      0  HUD: TransitionToRequestedPowerState from 4 to 2
+Aug 19 15:17:33.729               dim_hud_d.258110              default      0  HUD: TransitionToRequestedPowerState Power state is PRE ON
+Aug 19 15:17:33.733               dim_hud_d.258110              default      0  HUD: Is Serializer ON?: True
+Aug 19 15:17:33.735               dim_hud_d.258110              default      0  IsPresent: Detected MAX96752F (rev. 0x88) deserializer
+Aug 19 15:17:33.735               dim_hud_d.258110              default      0  HUD: Is Deserializer ON?: True
+Aug 19 15:17:33.736               dim_hud_d.258110              default      0  HUD: Is GMSL Link-locked?: True
+Aug 19 15:17:33.737               dim_hud_d.258110              default      0  HUD: Is Video Link-locked?: True
+Aug 19 15:17:33.737               dim_hud_d.258110              default      0  HUD: WakeUpFromSleep
+Aug 19 15:17:33.738               dim_hud_d.258110              default      0  HUD: Periodic requests started, timer = 2
+Aug 19 15:17:33.738               dim_hud_d.258110              default      0  HUD: TransitionToRequestedPowerState Power state is ON
+Aug 19 15:17:33.738               dim_hud_d.258110              default      0  HUD: actual_power_state_ is 2
+Aug 19 15:17:33.739               dim_hud_d.258110              default      0  LED & LCD powered: ON
+Aug 19 15:17:33.803               dim_hud_d.258110              default      0  Requesting DSM Startup Routine Tests
+Aug 19 15:17:33.803               dim_hud_d.258110              default      0  DIM: calling dsm::Request::kStartMonitoring
+Aug 19 15:17:33.803               dim_hud_d.258110              default      0  [dsm_interface.cpp:44] DsmInterface: SendRequest: Sending request 0
+Aug 19 15:17:33.843               dim_hud_d.258110              default      0  Client requests power state change to state 2
+Aug 19 15:17:33.844               dim_hud_d.258110              default      0  HUD: Client requests power state change to state 2
+Aug 19 15:17:33.844               dim_hud_d.258110              default      0  HUD: Requested power state (2) is the same as actual power state (2)
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: InvldEolCalib:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: InvldCfg:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: AmbIllmnErr:0->3
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: IntrBriTiOut:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: IllmnTiOut:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: ActvnOfHudIllmnTiOut:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: DrvrMirriPosnTiOut:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: AmbIllmnTiOut:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: TwliBriTiOut:0->1
+Aug 19 15:17:33.942               dim_hud_d.258110              default      0  HUD MCU: TnlTiOut:0->1
+Aug 19 15:17:34.048               dim_hud_d.258110              default      0  [dsm_interface.cpp:72] DsmInterface: SendRequest: Received response 0
+Aug 19 15:17:34.048               dim_hud_d.258110              default      0  DIM: Run: Startup routine tests passed, response = 0
+Aug 19 15:17:34.048               dim_hud_d.258110              default      0  Synchronization with DSM done.
+Aug 19 15:17:34.086               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Start: Timer started, one-shot!
+Aug 19 15:17:34.086               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run, pid: 258110 tid: 19
+Aug 19 15:17:34.086               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run Timer has id: 3
+Aug 19 15:17:34.088               dim_hud_d.258110              default      0  DIM: Is Serializer ON?: True
+Aug 19 15:17:34.090               dim_hud_d.258110              default      0  IsPresent: Detected MAX96752F (rev. 0x88) deserializer
+Aug 19 15:17:34.090               dim_hud_d.258110              default      0  DIM: Is Deserializer ON?: True
+Aug 19 15:17:34.091               dim_hud_d.258110              default      0  DIM: Is GMSL Link-locked?: True
+Aug 19 15:17:34.092               dim_hud_d.258110              default      0  DIM: Is Video Link-locked?: True
+Aug 19 15:17:34.093               dim_hud_d.258110              default      0  ADC Reading Loop started
+Aug 19 15:17:34.093               dim_hud_d.258110              default      0  TIADS1015 driver running succesfully
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0  Derating parameters updated:
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_rel: 87.320488
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_der: 92.894829
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_hi_temp: 98.213593
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_hi_rel: 96.537758
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          BDL_min: 20
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          D_step: 20
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          BDL_hi_temp: 0
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          t_w: 90
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_vh: 105.342911
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_vl: -48.035400
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_open_faulty: -48.035400
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_open_nonfaulty: -28.933716
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_short: 124.592178
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_rel_LCD: 69.825699
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_rel_PCB: 69.828011
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_der_LCD: 92.880402
+Aug 19 15:17:34.101               dim_hud_d.258110              default      0          T_vh_LCD: 105.280426
+Aug 19 15:17:34.102               dim_hud_d.258110              default      0  DimDriver::DeRating thread started
+Aug 19 15:17:34.102               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is ON
+Aug 19 15:17:34.102               dim_hud_d.258110              default      0  DIM: actual_power_state_ is 2
+Aug 19 15:17:34.102               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState from 2 to 2
+Aug 19 15:17:34.102               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is PRE ON
+Aug 19 15:17:34.102               dim_hud_d.258110              default      0  LED & LCD powered: OFF
+Aug 19 15:17:34.107               dim_hud_d.258110              default      0  DIM Derating state changed. New state = Normal Operation, brightness level: 100%
+Aug 19 15:17:34.112               dim_hud_d.258110              default      0  LED & LCD powered: ON
+Aug 19 15:17:34.178               dim_hud_d.258110              default      0  Requesting DSM Startup Routine Tests
+Aug 19 15:17:34.178               dim_hud_d.258110              default      0  DIM: calling dsm::Request::kStartMonitoring
+Aug 19 15:17:34.178               dim_hud_d.258110              default      0  [dsm_interface.cpp:44] DsmInterface: SendRequest: Sending request 0
+Aug 19 15:17:34.287               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run Pulse received, counter_:-1, timer, id:3, tid:19
+Aug 19 15:17:34.288               dim_hud_d.258110              default      0  DIM: Video Tracking Lock Status: DE:1 VS:1 HS:1
+Aug 19 15:17:34.288               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run timer, id:3, tid:19, is not periodic, Exit!
+Aug 19 15:17:34.288               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run completed naturally, detaching thread
+Aug 19 15:17:34.536               dim_hud_d.258110              default      0  [dsm_interface.cpp:72] DsmInterface: SendRequest: Received response 0
+Aug 19 15:17:34.536               dim_hud_d.258110              default      0  DIM: Run: Startup routine tests passed, response = 0
+Aug 19 15:17:34.536               dim_hud_d.258110              default      0  Synchronization with DSM done.
+Aug 19 15:17:34.542               dim_hud_d.258110              default      0  HUD MCU: VisInpErr:0->1
+Aug 19 15:17:34.561               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Start: Timer has an old thread
+Aug 19 15:17:34.563               dim_hud_d.258110              default      0  DIM: Is Serializer ON?: True
+Aug 19 15:17:34.566               dim_hud_d.258110              default      0  IsPresent: Detected MAX96752F (rev. 0x88) deserializer
+Aug 19 15:17:34.566               dim_hud_d.258110              default      0  DIM: Is Deserializer ON?: True
+Aug 19 15:17:34.567               dim_hud_d.258110              default      0  DIM: Is GMSL Link-locked?: True
+Aug 19 15:17:34.569               dim_hud_d.258110              default      0  DIM: Is Video Link-locked?: True
+Aug 19 15:17:34.569               dim_hud_d.258110              default      0  TIADS1015 driver already running
+Aug 19 15:17:34.569               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is ON
+Aug 19 15:17:34.569               dim_hud_d.258110              default      0  DIM: actual_power_state_ is 2
+Aug 19 15:17:35.180               dim_hud_d.258110              default      0  HUD MCU: AmbIllmnErr:3->1
+Aug 19 15:18:02.155               dim_hud_d.258110              default      0  DIM HUD: GracePeriodTimer: TimerMonitor::Run Pulse received, counter_:-1, timer, id:1, tid:13
+Aug 19 15:18:02.155               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::CloseChannel: Connection already closed for timer
+Aug 19 15:18:02.155               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::CloseChannel: Channel already closed for timer
+Aug 19 15:18:02.155               dim_hud_d.258110              default      0  DIM HUD: LinkCheckTimer: TimerMonitor::Stop Timer is stopped
+Aug 19 15:18:02.155               dim_hud_d.258110              default      0  DIM HUD: GracePeriodTimer: TimerMonitor::Run timer, id:1, tid:13, is not periodic, Exit!
+Aug 19 15:18:02.155               dim_hud_d.258110              default      0  DIM HUD: GracePeriodTimer: TimerMonitor::Run completed naturally, detaching thread
+Aug 19 15:18:57.283               dim_hud_d.258110              default      0  Client requests power state change to state 4
+Aug 19 15:18:57.283               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState from 2 to 4
+Aug 19 15:18:57.283               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is PRE OFF
+Aug 19 15:18:57.283               dim_hud_d.258110              default      0  DIM: OnLinkDown: Is dimdriver initialized: 1
+Aug 19 15:18:57.284               dim_hud_d.258110              default      0  Tiads1015: Stopping
+Aug 19 15:18:57.284               dim_hud_d.258110              default      0  Tiads1015::ReadingLoop exits
+Aug 19 15:18:57.284               dim_hud_d.258110              default      0  DimDriver::DeRating thread stopped
+Aug 19 15:18:57.285               dim_hud_d.258110              default      0  Tiads1015: Stopped
+Aug 19 15:18:57.285               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Stop Timer is stopped
+Aug 19 15:18:57.285               dim_hud_d.258110              default      0  DIM: OnLinkDown Power state is OFF
+Aug 19 15:18:57.286               dim_hud_d.258110              default      0  IsPresent: Detected MAX96752F (rev. 0x88) deserializer
+Aug 19 15:18:57.286               dim_hud_d.258110              default      0  DIM: deserializer is present, Set led lcd Off
+Aug 19 15:18:57.739               dim_hud_d.258110              default      0  LED & LCD powered: OFF
+Aug 19 15:18:57.741               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is OFF
+Aug 19 15:18:57.741               dim_hud_d.258110              default      0  DIM: actual_power_state_ is 4
+Aug 19 15:19:58.265               dim_hud_d.258110              default      0  Client requests power state change to state 2
+Aug 19 15:19:58.265               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState from 4 to 2
+Aug 19 15:19:58.265               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is PRE ON
+Aug 19 15:19:58.273               dim_hud_d.258110              default      0  LED & LCD powered: ON
+Aug 19 15:19:58.333               dim_hud_d.258110              default      0  Requesting DSM Startup Routine Tests
+Aug 19 15:19:58.333               dim_hud_d.258110              default      0  DIM: calling dsm::Request::kStartMonitoring
+Aug 19 15:19:58.333               dim_hud_d.258110              default      0  [dsm_interface.cpp:44] DsmInterface: SendRequest: Sending request 0
+Aug 19 15:19:58.650               dim_hud_d.258110              default      0  [dsm_interface.cpp:72] DsmInterface: SendRequest: Received response 0
+Aug 19 15:19:58.650               dim_hud_d.258110              default      0  DIM: Run: Startup routine tests passed, response = 0
+Aug 19 15:19:58.650               dim_hud_d.258110              default      0  Synchronization with DSM done.
+Aug 19 15:19:58.672               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Start: Timer started, one-shot!
+Aug 19 15:19:58.672               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run, pid: 258110 tid: 13
+Aug 19 15:19:58.672               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run Timer has id: 1
+Aug 19 15:19:58.673               dim_hud_d.258110              default      0  DIM: Is Serializer ON?: True
+Aug 19 15:19:58.675               dim_hud_d.258110              default      0  IsPresent: Detected MAX96752F (rev. 0x88) deserializer
+Aug 19 15:19:58.675               dim_hud_d.258110              default      0  DIM: Is Deserializer ON?: True
+Aug 19 15:19:58.675               dim_hud_d.258110              default      0  DIM: Is GMSL Link-locked?: True
+Aug 19 15:19:58.676               dim_hud_d.258110              default      0  DIM: Is Video Link-locked?: False
+Aug 19 15:19:58.676               dim_hud_d.258110              default      0  ADC Reading Loop started
+Aug 19 15:19:58.676               dim_hud_d.258110              default      0  TIADS1015 driver running succesfully
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0  Derating parameters updated:
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_rel: 87.320488
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_der: 92.894829
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_hi_temp: 98.213593
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_hi_rel: 96.537758
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          BDL_min: 20
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          D_step: 20
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          BDL_hi_temp: 0
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          t_w: 90
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_vh: 105.342911
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_vl: -48.035400
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_open_faulty: -48.035400
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_open_nonfaulty: -28.933716
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_short: 124.592178
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_rel_LCD: 69.825699
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_rel_PCB: 69.828011
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_der_LCD: 92.880402
+Aug 19 15:19:58.681               dim_hud_d.258110              default      0          T_vh_LCD: 105.280426
+Aug 19 15:19:58.682               dim_hud_d.258110              default      0  DimDriver::DeRating thread started
+Aug 19 15:19:58.682               dim_hud_d.258110              default      0  DIM: TransitionToRequestedPowerState Power state is ON
+Aug 19 15:19:58.682               dim_hud_d.258110              default      0  DIM: actual_power_state_ is 2
+Aug 19 15:19:58.873               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run Pulse received, counter_:-1, timer, id:1, tid:13
+Aug 19 15:19:58.873               dim_hud_d.258110              default      0  DIM: Video Tracking Lock Status: DE:0 VS:0 HS:0
+Aug 19 15:19:58.874               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run timer, id:1, tid:13, is not periodic, Exit!
+Aug 19 15:19:58.874               dim_hud_d.258110              default      0  DIM: VideoTrackingTimer: TimerMonitor::Run completed naturally, detaching thread
