@@ -1,0 +1,181 @@
+
+Nebula,test_csd_dim_serializer_init                     test_csd_dim_serializer_init.py             (asteroid,
+Nebula,test_dim_and_hud_cold_boot                       test_dim_and_hud_cold_boot.py               (comet
+Nebula,test_dim_and_hud_grace_period                    test_dim_and_hud_grace_period.py            (comet
+Nebula,test_dim_and_hud_power_losses                    test_dim_and_hud_power_losses.py            (comet
+Nebula,test_dim_and_hud_str                             test_dim_and_hud_str.py                     (comet
+Nebula,test_dim_and_no_hud_setup                        test_dim_and_no_hud_setup.py                (comet
+Nebula,test_dim_bmetrics                                test_dim_bmetrics.py                        (comet
+Nebula,test_dim_hud_driver_initialized                  test_dim_hud_driver_initialized.py          (Asteroid, comet
+Nebula,test_dim_kscale_factor                           test_dim_kscale_factor.py                   (Asteroid
+Nebula,test_dim_lcd_white_balance                       test_dim_lcd_white_balance.py               (Asteroid,
+Nebula,test_dim_platform_generic                        test_dim_platform_generic.py                (Shared,
+Nebula,test_dim_status                                  test_dim_status.py                          (Asteroid, comet
+Nebula,test_dim_temp_derating                           test_dim_temp_derating.py                   (Asteroid,
+Nebula,test_dim_voltage                                 test_dim_voltage.py                         (Asteroid,
+Nebula,test_dsm_status                                  test_dsm_status.py                          (Shared,
+Nebula,test_handling_of_dim_unavailability              test_handling_of_dim_unavailability.py      (comet
+Nebula,test_handling_of_hud_unavailability              test_handling_of_hud_unavailability.py      (comet
+Nebula,test_hud_diag                                    test_hud_diag.py                            (comet
+Nebula,test_hud_status                                  test_hud_status.py                          (comet
+Nebula,test_qnx_rendering_on_dim                        test_qnx_rendering_on_dim.py                (Shared
+Nebula,test_stability_suspend_to_ram                    test_stability_suspend_to_ram.py            (Shared,
+
+
+Pixel,test_android_rendering_on_csd
+Pixel,test_csd5_0_peripherals_init
+Pixel,test_csd_bmetrics
+Pixel,test_csd_change_brightness_with_uds
+Pixel,test_csd_deserializer_init
+Pixel,test_csd_diag
+Pixel,test_csd_diag_identifiers
+Pixel,test_csd_dim_driver_initialized
+Pixel,test_csd_dim_serializer_init
+Pixel,test_csd_driver_initialized
+Pixel,test_csd_edp_bridge
+Pixel,test_csd_fec
+Pixel,test_csd_fec_with_relay
+Pixel,test_csd_monitors_gmsl_link_lock
+Pixel,test_csd_platform_generic
+Pixel,test_csd_power_cycle_stability
+Pixel,test_csd_status
+Pixel,test_csd_threads_status
+Pixel,test_handling_of_csd_unavailability
+Pixel,test_hdcp_status
+Pixel,test_no_lvds_error_after_session_transfer
+Pixel,test_power_request_behavior
+Pixel,test_runtime_display_stack_selection
+Pixel,test_slm_display_components
+Pixel,test_stability_suspend_to_ram
+Pixel,test_uart
+
+
+
+
+
+
+shared/display/common/test_dsm_status.py
+shared/display/csd/test_android_rendering_on_csd.py
+shared/display/csd/test_csd_platform_generic.py
+shared/display/csd/test_csd_power_cycle_stability.py
+shared/display/dim/test_dim_platform_generic.py
+shared/display/dim/test_qnx_rendering_on_dim.py
+
+
+
+comet/display/common/test_uart.py
+comet/display/common/test_slm_display_components.py
+comet/display/csd/test_csd_bmetrics.py
+comet/display/csd/test_csd_diag.py
+comet/display/csd/test_csd_fec.py
+comet/display/csd/test_csd_status.py
+comet/display/csd/test_csd_threads_status.py
+comet/display/csd/test_did_system_brightness.py
+comet/display/csd/test_hdcp_status.py
+comet/display/csd/test_csd_driver_initialized.py
+comet/display/csd/conftest.py
+comet/display/csd/test_csd_diag_identifiers.py
+comet/display/csd/test_handling_of_csd_unavailability.py
+comet/display/csd/test_no_lvds_error_after_session_transfer.py
+comet/display/dim/test_dim_bmetrics.py
+comet/display/dim/test_dim_status.py
+comet/display/dim/test_dim_thread_status.py
+comet/display/dim/test_handling_of_dim_unavailability.py
+comet/display/dim_hud_common/test_dim_hud_driver_initialized.py
+comet/display/dim_hud_common/test_dim_and_hud_cold_boot.py
+comet/display/dim_hud_common/test_dim_and_hud_grace_period.py
+comet/display/dim_hud_common/test_dim_and_hud_power_losses.py
+comet/display/dim_hud_common/test_dim_and_hud_str.py
+comet/display/dim_hud_common/test_dim_and_no_hud_setup.py
+comet/display/dim_hud_common/test_log_status.py
+comet/display/hud/test_handling_of_hud_unavailability.py
+comet/display/hud/test_hud_diag.py
+comet/display/hud/test_hud_status.py
+comet/display/hud/test_hud_threads_status.py
+
+
+
+asteroid/display/common/test_csd_dim_serializer_init.py
+asteroid/display/common/test_runtime_display_stack_selection.py
+asteroid/display/common/test_csd_dim_link_event.py
+asteroid/display/common/test_power_request_behavior.py
+asteroid/display/csd/test_csd_edp_bridge.py
+asteroid/display/csd/test_csd_safe_state2_feature_toggle.py
+asteroid/display/csd/test_csd_status.py
+asteroid/display/csd/test_csd_threads_status.py
+asteroid/display/csd/test_hdcp_status.py
+asteroid/display/csd/test_csd5_0_peripherals_init.py
+asteroid/display/csd/test_csd_diag_identifiers.py
+asteroid/display/csd/test_csd_monitors_gmsl_link_lock.py
+asteroid/display/csd/test_csd_power_reset_logic.py
+asteroid/display/csd/test_csd_deserializer_init.py
+asteroid/display/dim/test_dim_lcd_white_balance.py
+asteroid/display/dim/test_dim_thread_status.py
+asteroid/display/dim/test_dim_kscale_factor.py
+asteroid/display/dim/test_dim_status.py
+asteroid/display/dim/test_dim_temp_derating.py
+asteroid/display/dim/test_dim_voltage.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+comet/display/dim/test_dim_bmetrics.py                                                  ok
+comet/display/dim/test_dim_status.py                                                    ok
+comet/display/dim/test_dim_thread_status.py                                             missing
+comet/display/dim/test_handling_of_dim_unavailability.py                                ok
+
+comet/display/hud/test_handling_of_hud_unavailability.py                                ok
+comet/display/hud/test_hud_diag.py                                                      ok
+comet/display/hud/test_hud_status.py                                                    ok
+comet/display/hud/test_hud_threads_status.py                                            missing
+
+comet/display/dim_hud_common/test_dim_hud_driver_initialized.py                         ok
+comet/display/dim_hud_common/test_dim_and_hud_cold_boot.py                              ok
+comet/display/dim_hud_common/test_dim_and_hud_grace_period.py                           ok
+comet/display/dim_hud_common/test_dim_and_hud_power_losses.py                           ok
+comet/display/dim_hud_common/test_dim_and_hud_str.py                                    ok
+comet/display/dim_hud_common/test_dim_and_no_hud_setup.py                               ok
+comet/display/dim_hud_common/test_log_status.py                                         missing
+
+comet/display/common/test_uart.py                                                       missing
+comet/display/common/test_slm_display_components.py                                     ok pixel
+
+shared/display/dim/test_dim_platform_generic.py                                         ok
+shared/display/dim/test_qnx_rendering_on_dim.py                                         ok
+shared/display/common/test_dsm_status.py                                                ok
+
+
+asteroid/display/dim/test_dim_lcd_white_balance.py                                      ok
+asteroid/display/dim/test_dim_thread_status.py                                          ok
+asteroid/display/dim/test_dim_kscale_factor.py                                          ok
+asteroid/display/dim/test_dim_status.py                                                 ok
+asteroid/display/dim/test_dim_temp_derating.py                                          ok
+asteroid/display/dim/test_dim_voltage.py                                                ok
+
+asteroid/display/common/test_csd_dim_serializer_init.py                                 ok
+asteroid/display/common/test_runtime_display_stack_selection.py                         ok pixel
+asteroid/display/common/test_csd_dim_link_event.py                                      missing
+asteroid/display/common/test_power_request_behavior.py                                  ok pixel
+

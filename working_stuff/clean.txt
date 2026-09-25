@@ -1,0 +1,83 @@
+
+
+
+------- HT-42876 Documentation -------
+HT-24668   Create sequence diagram for ECARX display modules                                                                This is ECARX and                       last updated 2024-06-23
+HT-31624   [Safety] Add the details of startup routine test as part of SWAD                                                 We have documentation good enough        last updated 2024-12-03
+HT-53492   Generate state diagram via copilot and revision control it                                                       Does it have to be a specific ticket    last updated 2025-06-13
+
+
+------- HT-42873 Nebula CONTAINER: Refactoring/Quality improvement stories. -------
+None
+
+------- HT-41653 Nebula CONTAINER: Increased/improved tests coverage --------
+HT-16678	  [Prio High] spa2 DIM: De-Rating component testing                                                             Are we not already testing this?
+HT-28002	  Integrate DTH and DSM "component/integration" tests                                                           Last important update was 2024
+HT-31715	  Timeout in test_dim_power_state is very large                                                         keep    Its still 4 sec, keep it?
+HT-41123	  Update saftey_display_pytest_on_target test suite                                                             This is ci, last important update was 2024, remove? Story is about that we need to trigger integration test manually.
+(HT-43041	  Power Relay Pytest: DIM safe state test                                                                       Last important update was 2024, remove? Story is about we need a test checking safe state.)
+HT-46254	  CLONE - [Prio High] Add test to verify if all display threads are running (DIM/HUD)                           We have a test that test the threads, different is this story covers more
+HT-47618	  Investigate if we have any robust test that VCC can use to verify their nucs                                  Is this valid since we are moving to VCC?
+HT-47885	  Add unit tests for ALPNS hud.cpp                                                                      keep    There are no unit tests for hud.cpp. old ticket but lets keep it.
+HT-48092	  UDS rtt python test                                                                                   keep    There is no pytest for this
+HT-48739	  Unit test for dsm main                                                                                keep
+HT-48740	  Unit test for dth main                                                                                keep
+HT-49592	  Clean up test/shared pytest and utils                                                                 keep
+HT-51240	  [I2C Test] Create Pytest to trigger i2c test in CI                                                            Very lacking description, I can decide
+HT-51415	  Add integration test to HT test mapping                                                                       Is this valid with the move to VCC
+HT-52892	  Add test in gate to guard against dependency
+HT-52894	  Enable dth/dsm target test in gate
+HT-52895	  Enable unit test code coverage in gate
+HT-52896	  Improve pytest efficiency and stability
+HT-52898	  Reduce safety gate run time
+HT-55778	  Build team rigs(advance) - ECarX                                                                              This is ECARX
+HT-56638	  Build team rig - DHU 1.1
+HT-57486	  [Pytest] Improve CI environment error handling.
+HT-57616	  Enable SPA3 test in VCC CI                                                                                    Is this valid since we are moving to VCC?
+HT-58425	  Gate test to verify 60 fps on DIM
+HT-61228	  [SPA2] VCC CI dim&hud tests dry-runs                                                                          Is this valid since we are moving to VCC?
+HT-63500	  Setup proper mapping of Nebula tests (gate-in/post-merge/gate-out)
+HT-67409	  [Pytest] Remove the ADB-Android relation from the display tests.
+HT-69582	  [DSM] Add back test_dsm_link_speed_6gbps DSM Integration Test
+HT-73260	  Enable test_qnx_rendering_on_dim in HT-TEST MAPPING
+HT-75536	  Verify VCC domain test status and incorporate in Acceptance Test story                                      Is this valid since we are moving to VCC?
+HT-84893	  Add a thread handling test in HT CI
+
+
+
+key IN (HT-16678, HT-28002, HT-31715, HT-41123, HT-43041, HT-46254, HT-47618, HT-47885, HT-48092, HT-48739, HT-48740, HT-49592, HT-51240, HT-51415, HT-52892, HT-52894, HT-52895, HT-52896, HT-52898, HT-55778, HT-56638, HT-57486, HT-57616, HT-58425, HT-61228, HT-63500, HT-67409, HT-69582, HT-73260, HT-75536, HT-84893) ORDER BY key ASC, rank
+
+
+
+
+------ HT-68923 Saftey component improvements ------
+These tickets are creatd before 2025
+HT-28256  SWRS-8399 QM display driver priority                                                              2024-01-17 10:02 — To Do        Not been updated for long, remove?
+HT-34693 Create script to check that each SWRS is tested                                                    2024-06-12 16:15 — To Do        Not needed since not requested for 2 years and the move to VCC
+HT-41068 [Improvement optional] DTH: Refactor the dth to separate the configuration                         2024-10-29 16:05 — To Do        Is still valid and should be kept.
+                                                                                                                                             Software Requirements Specification
+key IN (HT-28256, HT-34693, HT-41068) ORDER BY key ASC, rank
+
+
+
+
+How to prevent next person to redo the same work
+
+
+
+
+Write some explanation :
+I attacked this on a broad scale and tried to flush out tickets that are instantly defined as
+    - older than a year taking into consideration if valid updated has been added.
+    - will not be valid when on VCC
+    - Touches ECARX
+
+Then I looked at the lists and tried to figure out if ticket might already be covered by other tickets or if it is not valid anymore,
+
+I gathered the result in these filters these which I thought we would go through now.
+
+
+The idea is to verify pretty fast by the team if the ticket can be removed based on my comments, If we hesitate I will keep it in the list and we can discuss it later.
+
+
+

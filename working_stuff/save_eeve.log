@@ -1,0 +1,1066 @@
+┌─fredrik@haleytek-433366:~
+└─(ins)$ ssh eevee
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-137-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Sep 23 10:30:42 AM UTC 2026
+
+  System load:                      0.22
+  Usage of /:                       79.0% of 97.87GB
+  Memory usage:                     8%
+  Swap usage:                       0%
+  Temperature:                      58.0 C
+  Processes:                        164
+  Users logged in:                  1
+  IPv4 address for enx6c6e07071f17: 172.20.21.2
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+1 device has a firmware upgrade available.
+Run `fwupdmgr get-upgrades` for more information.
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+108 updates can be applied immediately.
+1 of these updates is a standard security update.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+*** System restart required ***
+
+1 device has a firmware upgrade available.
+Run `fwupdmgr get-upgrades` for more information.
+
+Last login: Mon Sep 21 06:12:52 2026 from 172.20.20.105
+fredrik@eevee:~$ ls sources/
+flashfolder  haleytek-spa3-15
+fredrik@eevee:~$ cd sources/haleytek-spa3-15/
+fredrik@eevee:~/sources/haleytek-spa3-15$ pic
+pic      pico     picocom  piconv
+fredrik@eevee:~/sources/haleytek-spa3-15$ picocom -b 115200 /dev/ttyUSB1
+picocom v3.1
+
+port is        : /dev/ttyUSB1
+flowcontrol    : none
+baudrate is    : 115200
+parity is      : none
+databits are   : 8
+stopbits are   : 1
+escape is      : C-b
+local echo is  : no
+noinit is      : no
+noreset is     : no
+hangup is      : no
+nolock is      : no
+send_cmd is    : sz -vv
+receive_cmd is : rz -vv -E
+imap is        :
+omap is        :
+emap is        : crcrlf,delbs,
+logfile is     : none
+initstring     : none
+exit_after is  : not set
+exit is        : no
+
+Type [C-b] [C-h] to see available commands
+Terminal ready
+
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX# ls
+status
+Asteroid-QNX# i2c
+i2c_service  i2c_tool     i2cdbgr
+Asteroid-QNX# i2c
+i2c_service  i2c_tool     i2cdbgr
+Asteroid-QNX# i2c_tool
+Usage: For write/read operation
+ i2c_tool [read:r write:w] [device node] [slave address] [register addr] [RegAddrFormat (8b:0 - 16b:1)] [If write, series of values. If read, number of bytes to read]
+For scanning
+ i2c_tool [scan:s] [device node]
+Asteroid-QNX# i2c_tool r /dev/i2c
+i2c10        i2c3         i2c6         i2c8         i2c_service
+i2c2         i2c5         i2c7         i2c9
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x02 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0002,   0x0f,  0000-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x01 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0001,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x04 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0004,   0x10,  0001-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x05 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0005,   0xf0,  1111-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x02 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0002,   0x0f,  0000-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool s /dev/i2c6
+---------------
+Operation: Scan
+I2C Device: /dev/i2c6
+Scanning I2C slaves
+==============================
+I2C Slave found at address: 0x28
+I2C Slave found at address: 0x2a
+I2C Slave found at address: 0x40
+I2C Slave found at address: 0x48
+I2C Slave found at address: 0x49
+I2C Slave found at address: 0x4c
+I2C Slave found at address: 0x50
+I2C Slave found at address: 0x52
+I2C Slave found at address: 0x57
+I2C Slave found at address: 0x65
+==============================
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x02 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0002,   0x0f,  0000-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x02 1 1
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x04 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0004,   0x10,  0001-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x05 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0005,   0xf0,  1111-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x0C 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x000c,   0x45,  0100-0101
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x60 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0060,   0x97,  1001-0111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1cf 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01cf,   0x88,  1000-1000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x5 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0005,   0xf0,  1111-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x6 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x6 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x06 1 1
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x40 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x40
+Register, Value, Binary
+0x0006,   0x00,  0000-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x48 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x48
+Register, Value, Binary
+0x0006,   0x91,  1001-0001
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x60 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0060,   0x97,  1001-0111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1CF 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01cf,   0x88,  1000-1000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x06 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x71 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0071,   0x04,  0000-0100
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x70 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0070,   0x01,  0000-0001
+---------
+Regs count: 1
+---------
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x71 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0071,   0x04,  0000-0100
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x72 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0072,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x71 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0071,   0x04,  0000-0100
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x70 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0070,   0x01,  0000-0001
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x6 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x6 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x6 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x6 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x6 1 1
+Asteroid-QNX# dt
+dtach        dth          dth_client
+Asteroid-QNX# dth_client r 0x4c 0x06
+Response:
+0x0006: 0x02
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1ce 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01ce,   0x47,  0100-0111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1DO 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x001d,   0x00,  0000-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1D1 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d1,   0x1c,  0001-1100
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1D3 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d3,   0x38,  0011-1000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1D4 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d4,   0x4a,  0100-1010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1D4 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d4,   0x4a,  0100-1010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1ce 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01ce,   0x47,  0100-0111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 2 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# slog
+slog2info                               slogger2_forwarder
+slogger2                                slogger2_forwarder_config.json
+Asteroid-QNX# slog2info | grep 'DIM: DES: Setting oldi register settings for DIM 2.0'
+Asteroid-QNX# slog2info | grep 'DIM: DES: Setting oldi register settings for DIM 2.5'
+Asteroid-QNX# slog2info | grep 'DIM 2.5'
+Asteroid-QNX# slog2info | grep 'DIM 2.0'
+Sep 16 13:58:03.183               csd_dim_d.225343              default      0  DIM: DES: Unknown DIM revision, setting oldi register settings for DIM 2.0
+Sep 16 13:58:04.078               csd_dim_d.225343              default      0  DIM: DES: Unknown DIM revision, setting oldi register settings for DIM 2.0
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0047 2 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0047,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 2 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0000 2 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0000,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 2 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x5D 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x5d
+Register, Value, Binary
+0x0044,   0xc3,  1100-0011
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool s /dev/i2c8
+---------------
+Operation: Scan
+I2C Device: /dev/i2c8
+Scanning I2C slaves
+==============================
+I2C Slave found at address: 0x28
+I2C Slave found at address: 0x2a
+I2C Slave found at address: 0x2f
+I2C Slave found at address: 0x3a
+I2C Slave found at address: 0x4b
+I2C Slave found at address: 0x52
+I2C Slave found at address: 0x54
+I2C Slave found at address: 0x55
+I2C Slave found at address: 0x5d
+I2C Slave found at address: 0x65
+I2C Slave found at address: 0x6f
+==============================
+Asteroid-QNX# i2c_tool s /dev/i2c8
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x5D 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x5d
+Register, Value, Binary
+0x0044,   0xc3,  1100-0011
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 3
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+0x0045,   0xff,  1111-1111
+0x0046,   0xff,  1111-1111
+---------
+Regs count: 3
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c8 0x55 0x0044 1 3
+---------------
+Operation: Read
+I2C Device: /dev/i2c8
+Slave: 0x55
+Register, Value, Binary
+0x0044,   0xff,  1111-1111
+0x0045,   0xff,  1111-1111
+0x0046,   0xff,  1111-1111
+---------
+Regs count: 3
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1ce 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01ce,   0x47,  0100-0111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d0 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d0,   0x0b,  0000-1011
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d1 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d1,   0x1c,  0001-1100
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1ce 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01ce,   0x47,  0100-0111
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d0 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d0,   0x0b,  0000-1011
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d1 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d1,   0x1c,  0001-1100
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d2 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d2,   0x29,  0010-1001
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d3 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d3,   0x38,  0011-1000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d4 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d4,   0x4a,  0100-1010
+---------
+Regs count: 1
+---------
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d1 1 2
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d1,   0x1c,  0001-1100
+0x01d2,   0x29,  0010-1001
+---------
+Regs count: 2
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d1 2 2
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d1,   0x1c,  0001-1100
+0x01d2,   0x29,  0010-1001
+---------
+Regs count: 2
+---------
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool --help
+Usage: For write/read operation
+ i2c_tool [read:r write:w] [device node] [slave address] [register addr] [RegAddrFormat (8b:0 - 16b:1)] [If write, series of values. If read, number of bytes to read]
+For scanning
+ i2c_tool [scan:s] [device node]
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d1 0 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d1,   0x00,  0000-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d0 0 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d0,   0x00,  0000-0000
+---------
+Regs count: 1
+---------
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool --help
+Usage: For write/read operation
+ i2c_tool [read:r write:w] [device node] [slave address] [register addr] [RegAddrFormat (8b:0 - 16b:1)] [If write, series of values. If read, number of bytes to read]
+For scanning
+ i2c_tool [scan:s] [device node]
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x01ce 1 7
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01ce,   0x47,  0100-0111
+0x01cf,   0x88,  1000-1000
+0x01d0,   0x0b,  0000-1011
+0x01d1,   0x1c,  0001-1100
+0x01d2,   0x29,  0010-1001
+0x01d3,   0x38,  0011-1000
+0x01d4,   0x4a,  0100-1010
+---------
+Regs count: 7
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x0 1 7
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0000,   0x98,  1001-1000
+0x0001,   0x02,  0000-0010
+0x0002,   0x0f,  0000-1111
+0x0003,   0x81,  1000-0001
+0x0004,   0x10,  0001-0000
+0x0005,   0xf0,  1111-0000
+0x0006,   0x02,  0000-0010
+---------
+Regs count: 7
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x0 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0000,   0x98,  1001-1000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1ce 1 7
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01ce,   0x47,  0100-0111
+0x01cf,   0x88,  1000-1000
+0x01d0,   0x0b,  0000-1011
+0x01d1,   0x1c,  0001-1100
+0x01d2,   0x29,  0010-1001
+0x01d3,   0x38,  0011-1000
+0x01d4,   0x4a,  0100-1010
+---------
+Regs count: 7
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d0 1 7
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d0,   0x0b,  0000-1011
+0x01d1,   0x1c,  0001-1100
+0x01d2,   0x29,  0010-1001
+0x01d3,   0x38,  0011-1000
+0x01d4,   0x4a,  0100-1010
+0x01d5,   0x02,  0000-0010
+0x01d6,   0x00,  0000-0000
+---------
+Regs count: 7
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d0 1 7
+Asteroid-QNX# dth
+dth          dth_client
+Asteroid-QNX# dth
+dth          dth_client
+Asteroid-QNX# dth
+dth          dth_client
+Asteroid-QNX# dth_client
+Usage:
+        dth_client r device_address start_register [end_register]
+        dth_client w device_address start_register register_value [register_value [...]]
+All numbers are interpreted as hexadecimal, with optional '0x' prefix.
+Asteroid-QNX# dth_client r i2c6 0x1d0
+stoll: no conversion
+Usage:
+        dth_client r device_address start_register [end_register]
+        dth_client w device_address start_register register_value [register_value [...]]
+All numbers are interpreted as hexadecimal, with optional '0x' prefix.
+Asteroid-QNX# dth_client r 0x55 0x1d0
+DTH/Communication error: Read error
+Asteroid-QNX# dth_client r 0x4c 0x1d0
+Response:
+0x01d0: 0x0b
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1d0 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01d0,   0x0b,  0000-1011
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x20 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0020,   0x0c,  0000-1100
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x22 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0022,   0xa5,  1010-0101
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x28 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0028,   0x01,  0000-0001
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x22 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0022,   0xa5,  1010-0101
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1ce 1 7
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01ce,   0x47,  0100-0111
+0x01cf,   0x88,  1000-1000
+0x01d0,   0x0b,  0000-1011
+0x01d1,   0x1c,  0001-1100
+0x01d2,   0x29,  0010-1001
+0x01d3,   0x38,  0011-1000
+0x01d4,   0x4a,  0100-1010
+---------
+Regs count: 7
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x108 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x0108,   0x62,  0110-0010
+---------
+Regs count: 1
+---------
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1CF 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01cf,   0x88,  1000-1000
+---------
+Regs count: 1
+---------
+Asteroid-QNX#
+Asteroid-QNX# i2c_tool r /dev/i2c6 0x4c 0x1CF 1 1
+---------------
+Operation: Read
+I2C Device: /dev/i2c6
+Slave: 0x4c
+Register, Value, Binary
+0x01cf,   0x88,  1000-1000
+---------
+Regs count: 1
+---------
+Asteroid-QNX# dth_client r 0x4c 0x1d4
+Response:
+0x01d4: 0x4a
+Asteroid-QNX#
+
+

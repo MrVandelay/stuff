@@ -1,0 +1,100 @@
+kDimDesInitialSettings                                  DeserializerInit            Common
+kDimDesConfigGpioRegs                                   DeserializerInit            Common
+kDimDesSetLCDResetAndBLGPIO                             DeserializerInit            Common
+    kDimDesOLDIRegisterSettings2_0                          DeserializerInit            unique
+    kDimDesOLDIRegisterSettings2_5                          DeserializerInit            unique
+kDimEnableWatermarkSettings                             DeserializerInit            common
+kDimDesEnableVideoANDSetStreamID                        DeserializerInit            common
+    kDimDesSafetyMonitoringSettings2_0                      DeserializerInit            unique
+    kDimDesSafetyMonitoringSettings2_5                      DeserializerInit            unique
+kDimDesCtrl8TxRemErr                                    DeserializerInit            common
+
+
+kDimDesDisableSafetyMonitoringSettings                  DeserilizerShutdown
+kDimDesSetLCDResetAndBLGPIOLow                          DeserilizerShutdown
+kDimDesSettingLCD3V_3_Low                               DeserilizerShutdown
+kDimDesSettingsLCD_STBY_1_2_Low                         DeserilizerShutdown
+
+kDimDesSettingLCDResetHigh                              LcdInit
+kDimDesSettingsLCD_STBY_1_2_High                        LcDInit
+
+kDimDesDisableOLDIOutput                                Not used
+
+
+
+IsVideoLinkLocked
+
+ReadREmoteErrorRegisters                                kMax96870RegIntr3
+                                                        kMax96870RegArq2CfglCc
+                                                        kMax96870RegOvddioSet
+                                                        kMax96870RegIntrCrc1
+
+
+
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000004F5581F          REQ-368011
+    Verified
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000004291A8D          REQ-371271
+
+    Deserializer                            desMax96870     0x4C
+    PMIC Main                               dim_driver.hpp  0x3A
+    Backlight Power                         dim_driver.hpp  0x2F
+    EEPROM Memory                           dim_driver.hpp  0x55
+    EEPROM identification page                                  Cant find?
+    ADC                                     dim_driver.hpp  0x4B
+    Color DDI                               dim_driver.cpp  0x6F
+    LCD EEPROM                              dim_driver.hpp  0x54
+
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003C4855D          REQ-372530
+GPIO2   DISP_EEP_WP     (EEPROM Write Protect)
+
+GPIO8   BL_EN           (BL_ENABLE)        Set to high          DeserializerInit
+GPIO11  LCD3.3_EN               Set to high                     DeserializerInit
+GPIO16  LCD_STDBYB1                                         Set to high when desoLDI is enabled? VID_LOCK
+GPIO18  LCD_Reset           IS this RESET_LINK_BIT
+
+Check VID_LOCK
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003CE8A7E          REQ-372531
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003C48554          REQ-362406
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003915D75          REQ-362419
+url:swap://prod.carweaver.volvocars.net:3000/x040000000391F204          REQ-362487
+
+url:swap://prod.carweaver.volvocars.net:3000/x040000000391C9F5          REQ-362456
+
+req                                                                                 Req                  Code                Device
+0x1CE 1100-0111 OLDI1: B port used. VESA format used. Splitter mode disabled        1100-0111            1100_0111         0100-0111      Differs becase we set bit 7 when VID_LOCK = 0b0
+0x1D0 1011-0000 OLDI3: Output B3 from lane 0 and polarity inversed.                 1011-0000            1011 0000         0000-1011
+0x1D1 1100-0001 OLDI4: Output B clock from lane 1 and polarity inversed.            1100-0001            1100 0001         0001-1100
+0x1D2 1001-0010 OLDI5: Output B1 from lane 2 and polarity inversed.                 1001-0010            1001 0010         0010-1001
+0x1D3 1000-0011 OLDI6: Output B0 from lane 3 and polarity inversed.                 1000-0011            1000 1011         0011-1000
+0x1D4 1010-0100 OLDI7: Output B2 from clock lane and polarity inversed.             1010-0100            1010 1100         0100-1010
+
+
+
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16E55          REQ-479964
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D17116          REQ-479970
+                GPIO2                               GPIO2
+                GPIO4                                   GPIO4
+                GPIO5 Not in 2.5                                        GPIO5(Not present in REQ-368011)
+                GPIO8                               GPIO8
+                GPIO9                                   GPIO9
+                GPIO11                              GPIO11
+                GPIO16                              GPIO16
+                GPO17 Not in 2.5                                        GPIO17(Not present in REQ-368011)
+                GPIO18                              GPIO18
+                GPIO19 Not in 2.5                                       GPIO19(Not present in REQ-368011)
+
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000004B0365E          REQ-379976
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D18455          REQ-480002
+
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16C9E          REQ-479958
+
+
+
+

@@ -138,7 +138,15 @@ Set the settings to
                 ipv4: 192.168.1.2
                 Netmask: 255.255.255.0
 
-
+sudo systemctl restart NetworkManager.service
+## Setup ssh to UXC
+Switches on box: on    ''
+                     ''
+                     1234
+Set the settings to
+                linkspeed: ?Mb/s as defined on the box as well
+                ipv4: 198.19.60.2
+                Netmask: 255.255.252.0
 
 
 # Connect to DHU
@@ -325,6 +333,7 @@ make qnx-install
     2. Move to ~/sources/haleytek-dhu-15/firmware
     3. Unzip the FW.zip
     4. Got to picocom -b 115200 /dev/ttyUSB0 and excute "edl"
+        To verify that the device is in edl mode, you can run "lsusb" and check if the device is listed as "Qualcomm HS-USB QDLoader 9008"
     5. Start the device_testing docker wher we have qdl and checkpars.py
        ./tools/haleytek/docker-images/run.py --target device-testing
     6. In the docker run:
@@ -368,12 +377,23 @@ Test failing
 
 # VCC
 ## Download and flash DHU with moose
-Latest DHU software are in dhum-merged
+Latest DHU software are in dhum-merged/brick
+
 For the HKP the software are in DHUK-merged
 Find it here: https://ara-artifactory.volvocars.biz/ui/repos/tree/General/
 
 For HKP: Dowload userdebug/artifacts.zip
 For DHU: Dowload userdebug/FW.zip
+
+## for UXC its found under UXCH-marged or UXCM-merged
+
+## To update HKP
+Download artifacts.zip  from https://ara-artifactory.volvocars.biz/ui/repos/tree/General/uxch-merged/master/V/CURRENT
+Place it where it can be accedd from the docker
+Start volvo docker where we can find uxch_update
+./tools/volvo/docker_image/run.sh
+
+uxch_update --uds-transport serial --artifacts-path ./artifacts.zip
 
 ## How to build
 

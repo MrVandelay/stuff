@@ -1,0 +1,137 @@
+
+
+Thread                              file                                            Start in                                                  Lib
+
+CsdDimDMain                         main start
+ADC_debug
+DimResmgr                           dim_driver.cpp, resmgr.cpp                      DimDriver
+4
+ErrorHandlerLoop                    csd_driver.cpp, error_handler_impl.cpp
+TouchManagerDispatch
+TouchManagerReply
+TouchManagerDispatch
+TouchManagerReply
+CsdResmgr                           csd_driver.cpp, resmgr.cpp                      CsdDriver
+DoubleTaskBuffe                     double_task_buffer.cpp
+dim_state_resmgr                    state_monitor_impl.cpp, resmgr.cpp
+DoubleTaskBuffer                    double_task_buffer.cpp
+csd_state_resmgr                    state_monitor_impl.cpp, resmgr.cpp
+pm_handler
+AdcMonitor                          csd_driver.cpp, adc_monitor_impl.cpp
+LinkWorkerA                         link_monitor_impl.cpp
+LinkWorkerB                         link_monitor_impl.cpp
+LinkMonitor                         display_manager_impl.cpp, link_monitor_impl.cpp
+ADC Reading Loop                    dim_driver.cpp, adc_tiads1015.cpp
+DIM: DeRating                       dim_driver.cpp
+TouchInit                           csd_driver.cpp
+TconMonitor                         tcon_monitor_impl.cpp
+
+GpioInterruptMonitor
+InterruptHandler(GPIO75)            csd_driver.cpp, interrup_handler.cpp
+GpioInterruptMonitor
+InterruptHandler(GPIO6)             csd_driver.cpp, interrup_handler.cpp
+GpioInterruptMonitor
+InterruptHandler(GPIO53)            csd_driver.cpp, interrup_handler.cpp
+GpioInterruptMonitor
+InterruptHandler(GPIO103)           csd_driver.cpp, interrup_handler.cpp
+GpioInterruptMonitor
+TouchController                     csd_driver.cpp, touch_controller.cpp
+
+
+ErrorHandlerLoop
+DimRecovery
+CsdRecovery
+
+
+Binary:
+    Driver/BSHALP_COMMON_S3_CSD_DIM/common_driver/:         csd_dim_d                   lib_csd, lib_dim
+    driver/BSHALP_COMMON_S3_CSD_DIM/fault_handler           fault_handler_d
+    driver/BSHALP_COMMON_S3_CSD_DIM/display_stack_launcher  display_stack_launcher
+    safety/dth/dth                                          dth
+
+    safety/dsm/dsm:                                         dsm
+
+Libs:
+    driver/BSHALP_COMMON_S3_CSD_DIM/csd:                    lib_csd (csd_driver_5_0)
+    driver/BSHALP_COMMON_S3_CSD_DIM/dim:                    lib_dim (alp_2220_564_s3_dim)
+
+                                                                                haleytek_display_utils
+                                                                                haleytek_serdes
+                                                                                haleytek_i2c_utils
+                                                                                haleytek_gpio_utils
+                                                                                haleytek_eeprom_driver
+                                                                                haleytek_adc
+                                                                                haleytek_display_manager
+                                                                                haleytek_timer_monitor
+                                                                                haleytek_register_device
+                                                                                haleytek_lcd_driver
+                                                                                resmgr_helper_static
+                                                                                unlog::default
+                                                                                dsm_interface
+                                                                                haleytek_crc_utils
+                                                                                haleytek_csvlogger
+                                                                                dsmlib
+                                                                                haleytek_led_utils
+
+
+
+
+    qm_common/libadc:                                       libadc (haleytek_adc)
+    qm_common/libcrc:                                       libcrc (haleytek_crc_utils)
+    qm_common/libdisplaymanager:                            libdisplaymanager (haleytek_display_manager)
+    qm_common/libdisplayutils:                              libdisplayutils(
+                                                                haleytek_display_utils
+                                                                haleytek_file_utils
+                                                                haleytek_message_server_loop (safety_utils_massage_handler, haleytek_thread_model, safety_utils_system_call_with_timeout)
+                                                                haleytek_thread_model (haleytek_display_utils)
+                                                                haleytek_steady_clock
+                                                            )
+
+    qm_common/libdoubletaskbuffer:                          libdoubletaskbuff (haleytek_double_task_buffer)
+    qm_common/libeeprom:                                    libeeprom (haleytek_eeprom_driver)
+    qm_common/libfaulthandler:                              libfaulthandler (haleytek_fault_reporter, haleytek_fault_handler)
+    qm_common/libgpio:                                      libgpio (haleytek_gpio_utils)
+    qm_common/libi2c:                                       libi2c (haleytek_i2c_utils)
+    qm_common/liblcd:                                       liblcd (haleytek_lcd_driver)
+    qm_common/libled:                                       libled (haleytek_led_utils)
+    qm_common/libqcorepmlistener:                           libqcorepmlistener (haleytek_qcore_pm_listener)
+    qm_common/libregisterdevice:                            libregisterdevice (haleytek_register_device)
+    qm_common/libserdes:                                    libserdes (haleytek_serdes)
+    qm_common/libtimermonitor:                              libtimermonitor (haleytek_timer_monitor)
+    qm_common/libtouchmanager:                              libtouchmanager (haleytek_touch_manager)
+    qm_common/libuart:                                      libuart (haleytek_uart_utils)
+    qm_common/libudsonlvds:                                 libudsonlvds (udsonlvds)
+    qm_common/resource-manager:                             resource-manager (resmgr_helper, resmgr_helper_static  )
+
+
+    safety/dsm/dsm:                                         dsmlib (dth_messages
+                                                                    safety-utils-byte-manip
+                                                                    safety-utils-log
+                                                                    safety-utils-message-handler
+                                                                    safety-utils-arguments
+                                                                    salsa-definitions
+                                                                    dsm_interface
+                                                                        safety-utils-message-handler
+                                                                        safety-utils-log
+                                                                    haleytek_gpio_client
+                                                                    )
+
+                                                            dsm_interface
+
+
+    safety/dth/dth                                          dthlib (safety-utils-message-handler
+                                                                            haleytek_uart_utils
+                                                                            dth_messages
+                                                                                    safety-utils-message-handler
+                                                                            safety-utils-arguments
+                                                                            haleytek_i2c_safety_utils
+                                                                            )
+                                                            dth_messages
+
+
+request_handler.cpp: receives and validates QNX messages.
+communication_router_impl.cpp: selects a device by address.
+communication_device.cpp: performs UART/I2C reads and writes.
+dth_device_config.cpp: selects DHU/UXC hardware configurations.
+
+
