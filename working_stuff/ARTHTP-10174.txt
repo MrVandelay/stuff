@@ -31,12 +31,12 @@ ReadREmoteErrorRegisters                                kMax96870RegIntr3
 
 
 
+[ Requirement url                                                       Requirement ID, version]
+url:swap://prod.carweaver.volvocars.net:3000/x0400000004F5581F          (REQ-368011, Version: 3)
+    Verified                                                            OK
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000004F5581F          REQ-368011   Version: 3
-    Verified
-
-url:swap://prod.carweaver.volvocars.net:3000/x0400000004291A8D          REQ-371271
-    Name                                    defined in
+url:swap://prod.carweaver.volvocars.net:3000/x0400000004291A8D          (REQ-371271, Version: 2)
+    Name                                    Defined in      Id
     Deserializer                            desMax96870     0x4C        OK
     PMIC Main                               dim_driver.hpp  0x3A        OK
     Backlight Power                         dim_driver.hpp  0x2F        OK
@@ -55,23 +55,29 @@ url:swap://prod.carweaver.volvocars.net:3000/x0400000004291A8D          REQ-3712
         I2C Slave found at address: 0x5d    (Assume EEPROM identification page)
         I2C Slave found at address: 0x6f    (Assume Color DDI)
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000003C4855D          REQ-372530
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003C4855D      (REQ-372530, Version: 2)
     GPIO2   DISP_EEP_WP     (EEPROM Write Protect)
     GPIO8   BL_EN           (BL_ENABLE)        Set to high          DeserializerInit
     GPIO11  LCD3.3_EN               Set to high                     DeserializerInit
-    GPIO16  LCD_STDBYB1                                         Set to high when desoLDI is enabled? VID_LOCK
+    GPIO16  LCD_STDBYB1                                             Set to high when desoLDI is enabled? VID_LOCK
     GPIO18  LCD_Reset           IS this RESET_LINK_BIT
 
     Check VID_LOCK
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000003CE8A7E          REQ-372531
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003CE8A7E          (REQ-372531, Version: 2)
+    Verified by inspection of code                                            OK
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000003C48554          REQ-362406
-url:swap://prod.carweaver.volvocars.net:3000/x0400000003915D75          REQ-362419
-url:swap://prod.carweaver.volvocars.net:3000/x040000000391F204          REQ-362487
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003C48554          (REQ-362406, Version: 2)
+    Verified by inspection of code                                            OK
 
-url:swap://prod.carweaver.volvocars.net:3000/x040000000391C9F5          REQ-362456
-    req                                                                                             Code              Device
+url:swap://prod.carweaver.volvocars.net:3000/x0400000003915D75          (REQ-362419, Version: 1)
+    Verified by inspection of code                                            OK
+
+url:swap://prod.carweaver.volvocars.net:3000/x040000000391F204          (REQ-362487, Version: 1)
+    Verified by inspection of code                                            OK
+
+url:swap://prod.carweaver.volvocars.net:3000/x040000000391C9F5          (REQ-362456, Version: 1)
+    Req                                                                                             Code              Device            Status
     0x1CE  OLDI1: B port used. VESA format used. Splitter mode disabled        1100 0111            1100 0111         1100 0111         OK
     0x1D0  OLDI3: Output B3 from lane 0 and polarity inversed.                 1011 0000            1011 0000         1011 0000         OK
     0x1D1  OLDI4: Output B clock from lane 1 and polarity inversed.            1100 0001            1100 0001         1100 0001         OK
@@ -86,8 +92,10 @@ url:swap://prod.carweaver.volvocars.net:3000/x040000000391C9F5          REQ-3624
 
 
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16E55          REQ-479964
-url:swap://prod.carweaver.volvocars.net:3000/x0400000005D17116          REQ-479970
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16E55          (REQ-479964, Version: 1)
+    Verified by inspection of code                                            OK
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D17116          (REQ-479970, Version: 1)
+    Requirement                         Device
     GPIO2
     0x208           0110-0011           0110-0011           OK
     0x207           0110-0011           0110-0011           OK
@@ -139,16 +147,17 @@ url:swap://prod.carweaver.volvocars.net:3000/x0400000005D17116          REQ-4799
     0x239           1000-R011                               N/A
 
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000004B0365E          REQ-379976
-
+url:swap://prod.carweaver.volvocars.net:3000/x0400000004B0365E          (REQ-379976, Version: 2)
+    Requirement                             Device
     0x20          ---- 11--                 0000 1100       OK
     0x22          0110 0101                 0110 0101       OK
     0x28          ---- ---1                 0000 0001       OK
 
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000005D18455          REQ-480002
-
-url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16C9E          REQ-479958
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D18455          (REQ-480002, Version: 1)
+    Verified by inspection of  code                                            OK
+url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16C9E          (REQ-479958, Version: 1)
+    Verified by inspection of  code                                            OK
 
 
 
