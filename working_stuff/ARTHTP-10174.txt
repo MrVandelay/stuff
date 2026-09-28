@@ -32,30 +32,37 @@ ReadREmoteErrorRegisters                                kMax96870RegIntr3
 
 
 
-url:swap://prod.carweaver.volvocars.net:3000/x0400000004F5581F          REQ-368011
+url:swap://prod.carweaver.volvocars.net:3000/x0400000004F5581F          REQ-368011   Version: 3
     Verified
 
 url:swap://prod.carweaver.volvocars.net:3000/x0400000004291A8D          REQ-371271
+    Name                                    defined in
+    Deserializer                            desMax96870     0x4C        OK
+    PMIC Main                               dim_driver.hpp  0x3A        OK
+    Backlight Power                         dim_driver.hpp  0x2F        OK
+    EEPROM Memory                           dim_driver.hpp  0x55        OK
+    EEPROM identification page                                          Cant find?
+    ADC                                     dim_driver.hpp  0x4B        OK
+    Color DDI                               dim_driver.cpp  0x6F        OK
+    LCD EEPROM                              dim_driver.hpp  0x54        OK
 
-    Deserializer                            desMax96870     0x4C
-    PMIC Main                               dim_driver.hpp  0x3A
-    Backlight Power                         dim_driver.hpp  0x2F
-    EEPROM Memory                           dim_driver.hpp  0x55
-    EEPROM identification page                                  Cant find?
-    ADC                                     dim_driver.hpp  0x4B
-    Color DDI                               dim_driver.cpp  0x6F
-    LCD EEPROM                              dim_driver.hpp  0x54
-
+    Using i2c_tool s /dev/i2c8  to scan devices the following devices are found:
+        I2C Slave found at address: 0x2f    (Assume Backlight Power)
+        I2C Slave found at address: 0x3a    (Assume PMIC Main)
+        I2C Slave found at address: 0x4b    (Assume ADC)
+        I2C Slave found at address: 0x54    (Assume LCD EEPROM)
+        I2C Slave found at address: 0x55    (Assume EEPROM)
+        I2C Slave found at address: 0x5d    (Assume EEPROM identification page)
+        I2C Slave found at address: 0x6f    (Assume Color DDI)
 
 url:swap://prod.carweaver.volvocars.net:3000/x0400000003C4855D          REQ-372530
-GPIO2   DISP_EEP_WP     (EEPROM Write Protect)
+    GPIO2   DISP_EEP_WP     (EEPROM Write Protect)
+    GPIO8   BL_EN           (BL_ENABLE)        Set to high          DeserializerInit
+    GPIO11  LCD3.3_EN               Set to high                     DeserializerInit
+    GPIO16  LCD_STDBYB1                                         Set to high when desoLDI is enabled? VID_LOCK
+    GPIO18  LCD_Reset           IS this RESET_LINK_BIT
 
-GPIO8   BL_EN           (BL_ENABLE)        Set to high          DeserializerInit
-GPIO11  LCD3.3_EN               Set to high                     DeserializerInit
-GPIO16  LCD_STDBYB1                                         Set to high when desoLDI is enabled? VID_LOCK
-GPIO18  LCD_Reset           IS this RESET_LINK_BIT
-
-Check VID_LOCK
+    Check VID_LOCK
 
 url:swap://prod.carweaver.volvocars.net:3000/x0400000003CE8A7E          REQ-372531
 
@@ -64,37 +71,84 @@ url:swap://prod.carweaver.volvocars.net:3000/x0400000003915D75          REQ-3624
 url:swap://prod.carweaver.volvocars.net:3000/x040000000391F204          REQ-362487
 
 url:swap://prod.carweaver.volvocars.net:3000/x040000000391C9F5          REQ-362456
+    req                                                                                             Code              Device
+    0x1CE  OLDI1: B port used. VESA format used. Splitter mode disabled        1100 0111            1100 0111         1100 0111         OK
+    0x1D0  OLDI3: Output B3 from lane 0 and polarity inversed.                 1011 0000            1011 0000         1011 0000         OK
+    0x1D1  OLDI4: Output B clock from lane 1 and polarity inversed.            1100 0001            1100 0001         1100 0001         OK
+    0x1D2  OLDI5: Output B1 from lane 2 and polarity inversed.                 1001 0010            1001 0010         1001 0010         OK
+    0x1D3  OLDI6: Output B0 from lane 3 and polarity inversed.                 1000 0011            1000 1011         1000 0011         OK
+    0x1D4  OLDI7: Output B2 from clock lane and polarity inversed.             1010 0100            1010 1100         1010 0100         OK
 
-req                                                                                 Req                  Code                Device
-0x1CE 1100-0111 OLDI1: B port used. VESA format used. Splitter mode disabled        1100-0111            1100_0111         0100-0111      Differs becase we set bit 7 when VID_LOCK = 0b0
-0x1D0 1011-0000 OLDI3: Output B3 from lane 0 and polarity inversed.                 1011-0000            1011 0000         0000-1011
-0x1D1 1100-0001 OLDI4: Output B clock from lane 1 and polarity inversed.            1100-0001            1100 0001         0001-1100
-0x1D2 1001-0010 OLDI5: Output B1 from lane 2 and polarity inversed.                 1001-0010            1001 0010         0010-1001
-0x1D3 1000-0011 OLDI6: Output B0 from lane 3 and polarity inversed.                 1000-0011            1000 1011         0011-1000
-0x1D4 1010-0100 OLDI7: Output B2 from clock lane and polarity inversed.             1010-0100            1010 1100         0100-1010
+    0x02   Video pipeline enabled.                                             ---0 R111                            0000 1111           OK
+    0x108  VID_LOCK                                                            -R0- 0010                            0110 0010           Bit 5 should be marked as readonly in req, and I think we should read it as 1
+    0x1CF  OLDI2: Port A power down. SS disabled.Port B power up               0100 1000                            0100 1000           OK
 
 
 
 
 url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16E55          REQ-479964
 url:swap://prod.carweaver.volvocars.net:3000/x0400000005D17116          REQ-479970
-                GPIO2                               GPIO2
-                GPIO4                                   GPIO4
-                GPIO5 Not in 2.5                                        GPIO5(Not present in REQ-368011)
-                GPIO8                               GPIO8
-                GPIO9                                   GPIO9
-                GPIO11                              GPIO11
-                GPIO16                              GPIO16
-                GPO17 Not in 2.5                                        GPIO17(Not present in REQ-368011)
-                GPIO18                              GPIO18
-                GPIO19 Not in 2.5                                       GPIO19(Not present in REQ-368011)
+    GPIO2
+    0x208           0110-0011           0110-0011           OK
+    0x207           0110-0011           0110-0011           OK
+    0x206           1000-R000           1000-0000           OK
+
+    GPIO4
+    0x20E           0110-0001           0110-0001           OK
+    0x20D           1010-0001           1010-0001           OK
+    0x20C           1000-R011           1000-1011           OK
+
+    GPIO5   Not applied in 2.5
+    0x211           0110-0010                               N/A
+    0x210           1010-0010                               N/A
+    0x20F           1000-R011                               N/A
+
+    GPIO8
+    0x21A           0110-1000           0110-1000           OK
+    0x219           1010-1000           1010-1000           OK
+    0x218           1000-R000           1001-1000           OK but: GPIO pin 4 is driven to 1 when we set BL_EN to high in DeserializerInit
+
+    GPIO9
+    0x21D           0110-1011           0110-0110           NOK We initilize to id 6 when req says 11
+    0x21C           1010-1011           1010-0110           NOK We initilize to id 6 when req says 11
+    0x21B           1000-R011           1000-1011           OK
+
+    GPIO11
+    0x223           0110-1001           0110-1011           NOK We initilize to id B when req says 9
+    0x222           1010-1001           1010-1011           NOK We initilize to id B when req says 9
+    0x221           1000-R000           1001-1000           OK but: GPIO pin 4 is drivern to 1 when we set LCD3_3V_EN  DeserializerInit
+
+    GPIO16
+    0x232           0111-0000           0111-0000           OK
+    0x231           1011-0000           1011-0000           OK
+    0x230           1000-R000           1001-1000           OK but: GPIO pin 4 is driven to 1 when we set LCD_STDBYB1 in LCD init
+
+    GPIO17 Not applied in 2.5
+    0x235           0111-0001                               N/A
+    0x234           1011-0001                               N/A
+    0x233           1000-R000                               N/A
+
+    GPIO18
+    0x238           0111-0010           0111-0010           OK
+    0x237           1011-0010           1011-0010           OK
+    0x236           1000-R000           1001-1000           OK but: GPIO pin 4 is driven to 1 when we set LCD_RESET (inv) in LCD init
+
+    GPIO19  Not applied in 2.5
+    0x23B           0110-1100                               N/A
+    0x23A           1010-1100                               N/A
+    0x239           1000-R011                               N/A
 
 
 url:swap://prod.carweaver.volvocars.net:3000/x0400000004B0365E          REQ-379976
+
+    0x20          ---- 11--                 0000 1100       OK
+    0x22          0110 0101                 0110 0101       OK
+    0x28          ---- ---1                 0000 0001       OK
+
+
 url:swap://prod.carweaver.volvocars.net:3000/x0400000005D18455          REQ-480002
 
 url:swap://prod.carweaver.volvocars.net:3000/x0400000005D16C9E          REQ-479958
-
 
 
 
